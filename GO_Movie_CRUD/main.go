@@ -18,5 +18,13 @@ type Producer struct {
 var movies []Movie
 
 func main() {
-	fmt.Print("Hello")
+	fmt.Print("Welcome to Movie intro!")
+	r := mux.NewRouter()
+
+	r.HandleFunc("/movies", getMovies).Method("GET")
+	r.HandleFunc("/movies/{id}", getMovie).Method("POST")
+	r.HandleFunc("/movies", createMovie).Method("CREATE")
+	r.HandleFunc("/movies/{id}", updateMovie).Method("UPDATE")
+	r.HandleFunc("/movies/{id}", deleteMovie).Method("DELETE")
+
 }
