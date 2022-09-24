@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func formHandler(w http.ResponseWriter, r *http.Request){
+func formHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
@@ -18,15 +18,15 @@ func formHandler(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, "Phone number = %s\n", phone_num)
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request){
+func helloHandler(w http.ResponseWriter, r *http.Request) {
 	// Checking whether path is correct
 	if r.URL.Path != "/hello" {
 		http.Error(w, "404 not found", http.StatusNotFound)
 		return
 	}
-	if r.Method != "GET"{
+	if r.Method != "GET" {
 		http.Error(w, "method is not supported", http.StatusNotFound)
-		return 
+		return
 	}
 	fmt.Println(w, "Hello")
 }
@@ -39,8 +39,8 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 
 	fmt.Print("Start server port 8080!\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil (
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
-	)
-		
+	}
+
 }
