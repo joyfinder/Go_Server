@@ -22,9 +22,9 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/movies", getMovies).Method("GET")
-	r.HandleFunc("/movies/{id}", getMovie).Method("POST")
-	r.HandleFunc("/movies", createMovie).Method("CREATE")
-	r.HandleFunc("/movies/{id}", updateMovie).Method("UPDATE")
+	r.HandleFunc("/movies/{id}", getMovie).Method("GET")
+	r.HandleFunc("/movies", createMovie).Method("POST")
+	r.HandleFunc("/movies/{id}", updateMovie).Method("PUT")
 	r.HandleFunc("/movies/{id}", deleteMovie).Method("DELETE")
 
 }
