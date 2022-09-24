@@ -6,6 +6,18 @@ import (
 	"net/http"
 )
 
+func formHandler(w http.ResponseWriter, r *http.Request){
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+	fmt.Fprintf(w, "POST reqeust successful")
+	name := r.FormValue("name")
+	phone_num := r.FormValue("phone_number")
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "Phone number = %s\n", phone_num)
+}
+
 func helloHandler(w http.ResponseWriter, r *http.Request){
 	// Checking whether path is correct
 	if r.URL.Path != "/hello" {
@@ -16,6 +28,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request){
 		http.Error(w, "method is not supported", http.StatusNotFound)
 		return 
 	}
+	fmt.Println(w, "Hello")
 }
 
 func main() {
