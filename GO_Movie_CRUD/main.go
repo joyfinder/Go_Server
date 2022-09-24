@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type Movie struct {
@@ -24,6 +26,19 @@ var movies []Movie
 func getMovies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "applicaiton/json")
 	json.NewEncoder(w).Encode(movies)
+}
+
+func deleteMovie(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "applicaiton/json")
+	parameters := mux.Vars(r)
+	for idx, item := range movies {
+
+		if item.ID == parameters["id"] {
+			// Append other attributes, e.g. name, producer etc
+			movies = append(movies[:idx], movies[idx+1:]...)
+			break
+		}
+	}
 }
 
 func main() {
