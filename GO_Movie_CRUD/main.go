@@ -15,6 +15,8 @@ type Producer struct {
 	LastName  string `json:"lastname"`
 }
 
+var movies []Movie
+
 func main() {
 	fmt.Print("Hello")
 }
