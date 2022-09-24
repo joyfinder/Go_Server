@@ -28,7 +28,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "method is not supported", http.StatusNotFound)
 		return
 	}
-	fmt.Println(w, "Hello")
+	fmt.Fprintf(w, "Hello")
 }
 
 func main() {
