@@ -1,9 +1,9 @@
 package main
 
 import (
-	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"strconv"
 
@@ -76,7 +76,7 @@ func updateMovie(w http.ResponseWriter, r *http.Request) {
 			_ = json.NewDecoder(r.Body).Decode(&movie)
 			movie.ID = parameters["id"]
 			movies = append(movies, movie)
-			json.NewDecoder(w).Encode(movie)
+			json.NewEncoder(w).Encode(movie)
 			return
 		}
 	}
@@ -87,10 +87,10 @@ func main() {
 	r := mux.NewRouter()
 
 	movies = append(movies, Movie{ID: "01", Name: "Narco", Origin: "SK", Length_Hours: 2.5, Producer: &Producer{FirstName: "Kim", LastName: "Tony"}})
-	r.HandleFunc("/movies", getMovies).Method("GET")
-	r.HandleFunc("/movies/{id}", getMovie).Method("GET")
-	r.HandleFunc("/movies", createMovie).Method("POST")
-	r.HandleFunc("/movies/{id}", updateMovie).Method("PUT")
-	r.HandleFunc("/movies/{id}", deleteMovie).Method("DELETE")
+	r.HandleFunc("/movies", getMovies).Methods("GET")
+	r.HandleFunc("/movies/{id}", getMovie).Methods("GET")
+	r.HandleFunc("/movies", createMovie).Methods("POST")
+	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
+	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
 
 }
