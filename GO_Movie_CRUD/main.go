@@ -1,9 +1,11 @@
 package main
 
 import (
+	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -41,6 +43,14 @@ func deleteMovie(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func createMovie(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "applicaiton/json")
+	var movie Movie
+	_ = json.NewDecoder(r.Body).Decode(&movie)
+	movie.ID = strconv.Itoa(rand.Intn(10000000))
+	movies = append(movies, movie)
+	json.NewEncoder(w).Encode(movie)
+}
 func main() {
 	fmt.Print("Welcome to Movie intro!")
 	r := mux.NewRouter()
