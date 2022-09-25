@@ -26,7 +26,7 @@ The project is currently under construction.
 
         Error: write EPROTO 5636819960:error:100000f7:SSL routines:OPENSSL_internal:WRONG_VERSION_NUMBER:../../../src/third_party/boringssl/src/ssl/tls_record.cc:242:
     
-    Solution: Root cause could be the use of https instead of http. Changing url into http, and re-run it.
+Solution: Root cause could be the use of https instead of http. Changing url into http, and re-run it.
 
 ## See also
 
