@@ -87,6 +87,8 @@ func main() {
 	r := mux.NewRouter()
 
 	movies = append(movies, Movie{ID: "01", Name: "Narco", Origin: "SK", Length_Hours: 2.5, Producer: &Producer{FirstName: "Kim", LastName: "Tony"}})
+	movies = append(movies, Movie{ID: "02", Name: "Imitation Game", Origin: "UK", Length_Hours: 3, Producer: &Producer{FirstName: "Benedict", LastName: "Cumberbatch"}})
+	movies = append(movies, Movie{ID: "03", Name: "Kungfu", Origin: "TW", Length_Hours: 2, Producer: &Producer{FirstName: "Lee", LastName: "Bruce"}})
 	r.HandleFunc("/movies", getMovies).Methods("GET")
 	r.HandleFunc("/movies/{id}", getMovie).Methods("GET")
 	r.HandleFunc("/movies", createMovie).Methods("POST")
