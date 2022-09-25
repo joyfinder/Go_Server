@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -83,7 +84,6 @@ func updateMovie(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Print("Welcome to Movie intro!")
 	r := mux.NewRouter()
 
 	movies = append(movies, Movie{ID: "01", Name: "Narco", Origin: "SK", Length_Hours: 2.5, Producer: &Producer{FirstName: "Kim", LastName: "Tony"}})
@@ -95,4 +95,6 @@ func main() {
 	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
 	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
 
+	fmt.Printf("\nStarting server at port 8000\n")
+	log.Fatal(http.ListenAndServe(":8000", r))
 }
