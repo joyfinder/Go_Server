@@ -14,6 +14,27 @@ func NewUserController(s *mgo.Session) *UserController {
 	return &UserController{s}
 }
 
+func (uc UserController) CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	u := model.User{}
+
+	json.NewDecoder(r.Body).Decode(&u)
+
+	u.Id = bson.NewObjectId()
+
+	uc.session.DB("mongo-golang").C("users").Insert(u)
+
+	uj, err := json.Marshal(u)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, "%s\n", uj)
+
+}
+
 func (uc UserController) GetUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	id := p.ByName("id")
 
