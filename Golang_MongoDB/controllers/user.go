@@ -6,6 +6,9 @@ import (
 	"net/http"
 
 	"github.com/Go_Server/Golang_MongoDB/model"
+	"github.com/julienschmidt/httprouter"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type UserController struct {
@@ -48,12 +51,12 @@ func (uc UserController) DeleteUser(w http.ResponseWriter, r *http.Request, p ht
 
 	oid := bson.ObjectIdHex(id)
 
-	uc.session.DB("mongo-golang").C("users").RemoveId(oid); err != nil {
+	if err := uc.session.DB("mongo-golang").C("users").RemoveId(oid); err != nil {
 		w.WriteHeader(404)
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmr.Fprintf(w, "Deleted user", oid, "\n")
+	fmt.Fprintf(w, "Deleted user", oid, "\n")
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
