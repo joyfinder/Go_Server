@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/Go_Server/Golang_MongoDB/model"
 )
 
 type UserController struct {
@@ -35,6 +37,25 @@ func (uc UserController) CreateUser(w http.ResponseWriter, r *http.Request, p ht
 
 }
 
+func (uc UserController) DeleteUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+
+	id := p.ByName("id")
+
+	if !bson.IsObjectIdHex(id) {
+		w.WriteHeader(404)
+		return
+	}
+
+	oid := bson.ObjectIdHex(id)
+
+	uc.session.DB("mongo-golang").C("users").RemoveId(oid); err != nil {
+		w.WriteHeader(404)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmr.Fprintf(w, "Deleted user", oid, "\n")
+}
+
 func (uc UserController) GetUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	id := p.ByName("id")
 
@@ -42,7 +63,7 @@ func (uc UserController) GetUser(w http.ResponseWriter, r *http.Request, p httpr
 		w.WriteHeader(http.StatusNotFound)
 	}
 
-	oid := bson.ObjectHex(id)
+	oid := bson.ObjectIdHex(id)
 
 	u := model.User{}
 
