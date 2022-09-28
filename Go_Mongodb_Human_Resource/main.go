@@ -5,6 +5,9 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-drive/mongo"
+	// "go.mongodb.org/mongo-drive/mongo/options"
+	// "go.mongodb.org/mongo-drive/bson"
+	// "go.mongodb.org/mongo-drive/bson/primitive"
 )
 
 type MongoInstance struct {
@@ -20,7 +23,9 @@ type Employee struct {
 }
 
 func Connect() error {
-	mongo.NewClient
+
+	// Connect to client host
+	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
 }
 
 var mg MongoInstance
