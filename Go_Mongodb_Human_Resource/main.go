@@ -4,11 +4,12 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"go.mongodb.org/mongo-drive/mongo"
 )
 
 type MongoInstance struct {
 	Client
-	DB
+	Db
 }
 
 type Employee struct {
@@ -19,7 +20,7 @@ type Employee struct {
 }
 
 func Connect() error {
-
+	mongo.NewClient
 }
 
 var mg MongoInstance
