@@ -27,6 +27,11 @@ type (
 	}
 )
 
-func main() {
-
+func init() {
+	rdr = renderer.New()
+	sess, err := mgo.Dial(hostname)
+	checkErr(err)
+	// Changing the setmode
+	sess.SetMode(mgo.Monotonic, true)
+	db = sess.DB(dbName)
 }
