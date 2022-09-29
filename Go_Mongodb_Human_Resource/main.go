@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"log"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-drive/mongo"
@@ -26,6 +28,12 @@ func Connect() error {
 
 	// Connect to client host
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancer()
+
+	err = client.Connect(ctx)
+	db := client.Database(dbName)
 }
 
 var mg MongoInstance
