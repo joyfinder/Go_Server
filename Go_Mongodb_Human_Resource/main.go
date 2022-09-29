@@ -72,9 +72,30 @@ func main() {
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
 		}
-		var employee []Employee = make([Employee, 0])
+		var employees []Employee = make([Employee, 0])
+
+		if err := cursor.All(c.Context(), &employees), err != nil {
+			return c.Status(500).SendString(err.Error())
+		}
+
+		return c.JSON(employees)
 	})
-	app.Post("/employee")
+	app.Post("/employee", func (c *fiber.Ctx) error {
+		collection := mg.Db.Collection("employees")
+
+		employee := new(Employee)
+
+		if err := c.BodyParser(employee); err != nil {
+			return c.Status(400).SendString(err.Error())	
+		}
+
+		employee.ID = ""
+
+		insertionResult, err := collection.InsertOne(c.Context(), employee)
+		if err := nil {
+			return c.Status(400).SendString(err.Error())
+		}
+	})
 	app.Put("/employee/:id")
 	app.Delete("/employee/:id")
 }
