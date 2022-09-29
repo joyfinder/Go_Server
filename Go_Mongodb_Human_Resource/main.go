@@ -60,7 +60,9 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/employee", func(c *fiber.Ctx) error {
-
+		// Slice: functioning similarly with Array, but containing objects
+		// In other words, storing number of employees' id
+		var employee []Employee
 	})
 	app.Post("/employee")
 	app.Put("/employee/:id")
