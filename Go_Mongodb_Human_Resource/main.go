@@ -19,10 +19,10 @@ type MongoInstance struct {
 }
 
 type Employee struct {
-	ID     string
-	Age    string
-	Name   string
-	Salary float64
+	ID     string  `json: "id,omitempty" bson:"_id, omitempty"`
+	Age    string  `json: "name"`
+	Name   string  `json: "salary"`
+	Salary float64 `json: "age"`
 }
 
 func Connect() error {
