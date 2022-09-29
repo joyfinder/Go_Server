@@ -12,9 +12,10 @@ import (
 	// "go.mongodb.org/mongo-drive/bson/primitive"
 )
 
+// Data type: includes Client & db
 type MongoInstance struct {
-	Client
-	Db
+	Client *mongo.Client
+	Db     *mongo.Database
 }
 
 type Employee struct {
