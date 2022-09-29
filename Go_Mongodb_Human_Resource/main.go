@@ -34,6 +34,16 @@ func Connect() error {
 
 	err = client.Connect(ctx)
 	db := client.Database(dbName)
+
+	if err != nil {
+		return err
+	}
+
+	mg = MongoInstance{
+		Client: client,
+		Db:     db,
+	}
+	return nil
 }
 
 var mg MongoInstance
