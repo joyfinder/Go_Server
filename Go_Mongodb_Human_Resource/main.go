@@ -3,10 +3,13 @@ package main
 import (
 	"context"
 	"log"
+	"net"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/pelletier/go-toml/query"
 	"go.mongodb.org/mongo-drive/mongo"
+	"gopkg.in/mgo.v2/bson"
 	// "go.mongodb.org/mongo-drive/mongo/options"
 	// "go.mongodb.org/mongo-drive/bson"
 	// "go.mongodb.org/mongo-drive/bson/primitive"
@@ -62,7 +65,14 @@ func main() {
 	app.Get("/employee", func(c *fiber.Ctx) error {
 		// Slice: functioning similarly with Array, but containing objects
 		// In other words, storing number of employees' id
-		var employee []Employee
+		query := bson.D{{}}
+
+		cursor, err := mg.dB.Collection("employee").Find(c.Context(), query)
+
+		if err != nil {
+			return c.Status(500).SendString(err.Error())
+		}
+		var employee []Employee = make([Employee, 0])
 	})
 	app.Post("/employee")
 	app.Put("/employee/:id")
