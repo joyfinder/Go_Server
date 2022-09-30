@@ -51,6 +51,12 @@ func main() {
 		WriteTimeout: 60 * time.Second,
 		IdleTimeout:  60 * time.Second,
 	}
+	go func(){
+		log.Println("Listening on port", port)
+		if err := svr.ListenAndServe(); err != nil {
+			log.Printf("listen:%s\n", err)
+		}
+	}
 }
 
 func homeHandler() http.Handler {
