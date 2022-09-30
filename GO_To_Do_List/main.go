@@ -1,6 +1,17 @@
 package main
 
-import "time"
+import (
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/gofiber/fiber/middleware"
+	"github.com/thedevsaddam/renderer"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+)
 
 var rdr *renderer.Render
 var db *mgo.Database
@@ -27,6 +38,23 @@ type (
 	}
 )
 
+func main() {
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Get("/", homeHandler)
+	r.Mount("/todo", todoHandlers())
+}
+
+func homeHandler() http.Handler {
+	rg := chi.NewRouter()
+	rg.Group(func(r chi.Router) {
+		r.Get("/", fetchTodos)
+		r.Post("/", createTodo)
+		r.Put("/{id}", updateTodo)
+		r.Delete("/{id}", deleteTodo)
+	})
+}
+
 func init() {
 	rdr = renderer.New()
 	sess, err := mgo.Dial(hostname)
@@ -34,4 +62,10 @@ func init() {
 	// Changing the setmode
 	sess.SetMode(mgo.Monotonic, true)
 	db = sess.DB(dbName)
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
