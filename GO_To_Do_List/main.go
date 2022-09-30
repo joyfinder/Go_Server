@@ -43,6 +43,14 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Get("/", homeHandler)
 	r.Mount("/todo", todoHandlers())
+
+	svr := &http.Server{
+		Address:      port,
+		Handler:      r,
+		ReadTimeout:  60 * time.Second,
+		WriteTimeout: 60 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
 }
 
 func homeHandler() http.Handler {
