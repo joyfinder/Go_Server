@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -39,6 +41,9 @@ type (
 )
 
 func main() {
+
+	stopChan := make(chan os.Signal)
+	signal.Notify(stopChan, os.Interrupt)
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", homeHandler)
@@ -57,6 +62,10 @@ func main() {
 			log.Printf("listen:%s\n", err)
 		}
 	}
+
+
+	<-stopChan
+	log.Println("Shutting down server...")
 }
 
 func homeHandler() http.Handler {
