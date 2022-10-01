@@ -89,6 +89,16 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	todoList := []todo{}
+
+	// Append todo tasks into list
+	for _ , t := range todos{
+		todoList = append(todoList, todo{
+			ID: t.ID.Hex(),
+			Title: t.Title,
+			Completed: t.Completed,
+			CreatedAt: t.CreatedAt,
+		})
+	}
 }
 
 func homeHandler() http.Handler {
