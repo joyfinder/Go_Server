@@ -1,8 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -39,6 +42,9 @@ type (
 )
 
 func main() {
+
+	stopChan := make(chan os.Signal)
+	signal.Notify(stopChan, os.Interrupt)
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", homeHandler)
@@ -57,6 +63,32 @@ func main() {
 			log.Printf("listen:%s\n", err)
 		}
 	}
+
+
+	<-stopChan
+	log.Println("Shutting down server...")
+	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+	svr.Shutdown(ctx)
+	defer cancel(
+		log.Println("Server stopped.")
+	)
+}
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	err := rnd.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
+	checkErr(err)
+}
+
+func fetchTodos(w http.ResponseWriter, r *http.Request){
+	todos := []todoModel{}
+
+	if err := db.C(collectionName).Find(bson.M{}).All(&todos); err != nil {
+		rnd.JSON(w, http.StatusProcessing, renderer.M{
+			"message":"Failed to fetch todo",
+			"error":err,
+		})
+		return
+	}
+	todoList := []todo{}
 }
 
 func homeHandler() http.Handler {
