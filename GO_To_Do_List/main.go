@@ -79,7 +79,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func fetchTodos(w http.ResponseWriter, r *http.Request){
-	
+	todos := []todoModel{}
+
+	if err := db.C(collectionName).Find(bson.M{}).All(&todos); err != nil {
+		rnd.JSON(w, http.StatusProcessing, renderer.M{
+			"message":"Failed to fetch todo",
+			"error":err,
+		})
+		return
+	}
+	todoList := []todo{}
 }
 
 func homeHandler() http.Handler {
