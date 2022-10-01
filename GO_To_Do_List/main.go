@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -66,6 +67,15 @@ func main() {
 
 	<-stopChan
 	log.Println("Shutting down server...")
+	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+	svr.Shutdown(ctx)
+	defer cancel(
+		log.Println("Server stopped.")
+	)
+}
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	err := rnd.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
+	checkErr(err)
 }
 
 func homeHandler() http.Handler {
