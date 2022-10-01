@@ -78,6 +78,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 	checkErr(err)
 }
 
+func fetchTodos(w http.ResponseWriter, r *http.Request){
+	
+}
+
 func homeHandler() http.Handler {
 	rg := chi.NewRouter()
 	rg.Group(func(r chi.Router) {
