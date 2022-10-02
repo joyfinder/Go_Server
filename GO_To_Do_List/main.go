@@ -126,6 +126,13 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 		Completed: false,
 		CreatedAt: time.Now(),
 	}
+	if err := db.C(collectionName).Insert(&tm); err != nil {
+		rdr.JSON(w, http.StatusProcessing, renderer.M{
+			"message":"Failed to save todo memo"
+			"error":err,
+		})
+		return
+	}
 }
 
 func homeHandler() http.Handler {
