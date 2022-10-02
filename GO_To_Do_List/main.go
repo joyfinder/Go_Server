@@ -133,6 +133,10 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 		})
 		return
 	}
+	rdr.JSON(w, http.StatusCreated, renderer.M{
+		"message":"todo created successfully"
+		"todo_id": tm.ID.Hex()
+	})
 }
 
 func homeHandler() http.Handler {
