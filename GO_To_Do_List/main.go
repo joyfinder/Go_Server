@@ -75,7 +75,7 @@ func main() {
 	)
 }
 func homeHandler(w http.ResponseWriter, r *http.Request){
-	err := rnd.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
+	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
 	checkErr(err)
 }
 
@@ -83,7 +83,7 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 	todos := []todoModel{}
 
 	if err := db.C(collectionName).Find(bson.M{}).All(&todos); err != nil {
-		rnd.JSON(w, http.StatusProcessing, renderer.M{
+		rdr.JSON(w, http.StatusProcessing, renderer.M{
 			"message":"Failed to fetch todo",
 			"error":err,
 		})
@@ -100,7 +100,7 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 			CreatedAt: t.CreatedAt,
 		})
 	}
-	rnd.JSON(w, http.StatusOK, renderer.M{
+	rdr.JSON(w, http.StatusOK, renderer.M{
 		"data": todoList,
 	})
 }
@@ -111,6 +111,10 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
 		rdr.JSON(w, http.StateusProcess, err)
 		return
+	}
+
+	if t.tile == ""{
+		rdr
 	}
 }
 
