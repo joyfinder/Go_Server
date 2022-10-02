@@ -104,6 +104,10 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 	})
 }
 
+func createTodo(w http.ResponseWriter, r *http.Request){
+	var t todo
+}
+
 func homeHandler() http.Handler {
 	rg := chi.NewRouter()
 	rg.Group(func(r chi.Router) {
