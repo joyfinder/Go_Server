@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -74,7 +75,7 @@ func main() {
 	)
 }
 func homeHandler(w http.ResponseWriter, r *http.Request){
-	err := rnd.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
+	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
 	checkErr(err)
 }
 
@@ -82,13 +83,60 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 	todos := []todoModel{}
 
 	if err := db.C(collectionName).Find(bson.M{}).All(&todos); err != nil {
-		rnd.JSON(w, http.StatusProcessing, renderer.M{
+		rdr.JSON(w, http.StatusProcessing, renderer.M{
 			"message":"Failed to fetch todo",
 			"error":err,
 		})
 		return
 	}
 	todoList := []todo{}
+
+	// Append todo tasks into list
+	for _ , t := range todos{
+		todoList = append(todoList, todo{
+			ID: t.ID.Hex(),
+			Title: t.Title,
+			Completed: t.Completed,
+			CreatedAt: t.CreatedAt,
+		})
+	}
+	rdr.JSON(w, http.StatusOK, renderer.M{
+		"data": todoList,
+	})
+}
+
+func createTodo(w http.ResponseWriter, r *http.Request){
+	var t todo
+
+	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+		rdr.JSON(w, http.StateusProcess, err)
+		return
+	}
+
+	if t.tile == ""{
+		rdr.JSON(w, http.StatusBadRequest, renderer.M{
+			"message":"Required an title input",
+		})
+		return
+	}
+
+	tm := todoModel{
+		ID: bson.NewObjectId(),
+		Title: t.Title,
+		Completed: false,
+		CreatedAt: time.Now(),
+	}
+	if err := db.C(collectionName).Insert(&tm); err != nil {
+		rdr.JSON(w, http.StatusProcessing, renderer.M{
+			"message":"Failed to save todo memo"
+			"error":err,
+		})
+		return
+	}
+	rdr.JSON(w, http.StatusCreated, renderer.M{
+		"message":"todo created successfully"
+		"todo_id": tm.ID.Hex()
+	})
 }
 
 func homeHandler() http.Handler {
