@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -106,6 +107,11 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 
 func createTodo(w http.ResponseWriter, r *http.Request){
 	var t todo
+
+	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+		rdr.JSON(w, http.StateusProcess, err)
+		return
+	}
 }
 
 func homeHandler() http.Handler {
