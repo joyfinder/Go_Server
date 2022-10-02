@@ -114,7 +114,17 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 	}
 
 	if t.tile == ""{
-		rdr
+		rdr.JSON(w, http.StatusBadRequest, renderer.M{
+			"message":"Required an title input",
+		})
+		return
+	}
+
+	tm := todoModel{
+		ID: bson.NewObjectId(),
+		Title: t.Title,
+		Completed: false,
+		CreatedAt: time.Now(),
 	}
 }
 
