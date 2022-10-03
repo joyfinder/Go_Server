@@ -163,6 +163,19 @@ func deleteTodo(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+func updateTodo(w http.ResponseWriter, r *http.Request){
+	id := strings.TrimSpace(chi.URLParam(r, "id"))
+
+	if !bson.IsObjectIdHex(id){
+		rdr.JSON(w, http.StatusBadRequest, renderer.M{
+			"message":"The id is invalid",
+		})
+		return 
+	}
+
+	var t todo
+}
+
 func homeHandler() http.Handler {
 	rg := chi.NewRouter()
 	rg.Group(func(r chi.Router) {
