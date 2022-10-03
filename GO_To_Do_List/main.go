@@ -72,9 +72,9 @@ func main() {
 	log.Println("Shutting down server...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
 	svr.Shutdown(ctx)
-	defer cancel(
-		log.Println("Server stopped.")
-	)
+	defer cancel()
+	log.Println("Server stopped.")
+	
 }
 func homeHandler(w http.ResponseWriter, r *http.Request){
 	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
