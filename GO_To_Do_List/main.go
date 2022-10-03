@@ -113,7 +113,7 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if t.tile == "" {
+	if t.Title == "" {
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
 			"message": "Required an title input",
 		})
@@ -190,7 +190,7 @@ func updateTodo(w http.ResponseWriter, r *http.Request) {
 		bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"title": t.Title, "completed": t.Completed},
 	); err != nil {
-		rdr.JSON(w, http.StatusProcessing, rdr.M{
+		rdr.JSON(w, http.StatusProcessing, renderer.M{
 			"message": "failed to update todo",
 			"error":   err,
 		})
