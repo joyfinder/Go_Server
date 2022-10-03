@@ -75,7 +75,7 @@ func main() {
 
 }
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
+	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl"}, nil)
 	checkErr(err)
 }
 
@@ -109,7 +109,7 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 	var t todo
 
 	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
-		rdr.JSON(w, http.StateusProcess, err)
+		rdr.JSON(w, http.StatusProcessing, err)
 		return
 	}
 
