@@ -206,6 +206,7 @@ func todoHandlers() http.Handler {
 		r.Put("/{id}", updateTodo)
 		r.Delete("/{id}", deleteTodo)
 	})
+	return rg
 }
 
 func init() {
