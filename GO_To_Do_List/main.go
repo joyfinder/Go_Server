@@ -178,6 +178,13 @@ func updateTodo(w http.ResponseWriter, r *http.Request){
 
 	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
 		rdr.JSON(w, http.StatusProcessing, err)
+		return  
+	}
+
+	if t.Title = ""{
+		rdr.JSON(w, http.StatusBadRequest, renderer.M{
+			"message":"Title field id is required",
+		})
 		return 
 	}
 }
