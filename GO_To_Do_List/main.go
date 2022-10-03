@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,7 +12,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	
+
 	"github.com/thedevsaddam/renderer"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -60,44 +59,43 @@ func main() {
 		WriteTimeout: 60 * time.Second,
 		IdleTimeout:  60 * time.Second,
 	}
-	go func(){
+	go func() {
 		log.Println("Listening on port", port)
 		if err := svr.ListenAndServe(); err != nil {
 			log.Printf("listen:%s\n", err)
 		}
 	}()
 
-
 	<-stopChan
 	log.Println("Shutting down server...")
-	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	svr.Shutdown(ctx)
 	defer cancel()
 	log.Println("Server stopped.")
-	
+
 }
-func homeHandler(w http.ResponseWriter, r *http.Request){
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err := rdr.Template(w, http.StatusOK, []string{"static/home.tpl", nil})
 	checkErr(err)
 }
 
-func fetchTodos(w http.ResponseWriter, r *http.Request){
+func fetchTodos(w http.ResponseWriter, r *http.Request) {
 	todos := []todoModel{}
 
 	if err := db.C(collectionName).Find(bson.M{}).All(&todos); err != nil {
 		rdr.JSON(w, http.StatusProcessing, renderer.M{
-			"message":"Failed to fetch todo",
-			"error":err,
+			"message": "Failed to fetch todo",
+			"error":   err,
 		})
 		return
 	}
 	todoList := []todo{}
 
 	// Append todo tasks into list
-	for _ , t := range todos{
+	for _, t := range todos {
 		todoList = append(todoList, todo{
-			ID: t.ID.Hex(),
-			Title: t.Title,
+			ID:        t.ID.Hex(),
+			Title:     t.Title,
 			Completed: t.Completed,
 			CreatedAt: t.CreatedAt,
 		})
@@ -107,7 +105,7 @@ func fetchTodos(w http.ResponseWriter, r *http.Request){
 	})
 }
 
-func createTodo(w http.ResponseWriter, r *http.Request){
+func createTodo(w http.ResponseWriter, r *http.Request) {
 	var t todo
 
 	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
@@ -115,88 +113,88 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	if t.tile == ""{
+	if t.tile == "" {
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"Required an title input",
+			"message": "Required an title input",
 		})
 		return
 	}
 
 	tm := todoModel{
-		ID: bson.NewObjectId(),
-		Title: t.Title,
+		ID:        bson.NewObjectId(),
+		Title:     t.Title,
 		Completed: false,
 		CreatedAt: time.Now(),
 	}
 	if err := db.C(collectionName).Insert(&tm); err != nil {
 		rdr.JSON(w, http.StatusProcessing, renderer.M{
-			"message":"Failed to save todo memo",
-			"error":err,
+			"message": "Failed to save todo memo",
+			"error":   err,
 		})
 		return
 	}
 	rdr.JSON(w, http.StatusCreated, renderer.M{
-		"message":"todo created successfully",
+		"message": "todo created successfully",
 		"todo_id": tm.ID.Hex(),
 	})
 }
 
-func deleteTodo(w http.ResponseWriter, r *http.Request){
+func deleteTodo(w http.ResponseWriter, r *http.Request) {
 	id := strings.TrimSpace(chi.URLParam(r, "id"))
 
-	if !bson.IsObjectIdHex(id){
+	if !bson.IsObjectIdHex(id) {
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"Id is invalid.",
+			"message": "Id is invalid.",
 		})
 		return
 
 		if err := db.C(collectionName).RemoveId(bson.ObjectIdHex(id)); err != nil {
 			rdr.JSON(w, http.StatusProcessing, renderer.M{
-				"message":"Failed to delete todo memo",
-				"error":err,
+				"message": "Failed to delete todo memo",
+				"error":   err,
 			})
 			return
 		}
 
 		rdr.JSON(w, http.StatusOK, renderer.M{
-			"message":"deleted todo successfully",
+			"message": "deleted todo successfully",
 		})
 	}
 }
 
-func updateTodo(w http.ResponseWriter, r *http.Request){
+func updateTodo(w http.ResponseWriter, r *http.Request) {
 	id := strings.TrimSpace(chi.URLParam(r, "id"))
 
-	if !bson.IsObjectIdHex(id){
+	if !bson.IsObjectIdHex(id) {
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"The id is invalid",
+			"message": "The id is invalid",
 		})
-		return 
+		return
 	}
 
 	var t todo
 
 	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
 		rdr.JSON(w, http.StatusProcessing, err)
-		return  
+		return
 	}
 
-	if t.Title = ""{
+	if t.Title == "" {
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"Title field id is required",
+			"message": "Title field id is required",
 		})
-		return 
+		return
 	}
 
 	if err := db.C(collectionName).Update(
-		bson.M{"_id":bson.ObjectIdHex(id)},
+		bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"title": t.Title, "completed": t.Completed},
 	); err != nil {
 		rdr.JSON(w, http.StatusProcessing, rdr.M{
-			"message":"failed to update todo",
-			"error": err,
+			"message": "failed to update todo",
+			"error":   err,
 		})
-		return 
+		return
 	}
 }
 
