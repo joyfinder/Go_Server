@@ -187,6 +187,17 @@ func updateTodo(w http.ResponseWriter, r *http.Request){
 		})
 		return 
 	}
+
+	if err := db.C(collectionName).Update(
+		bson.M{"_id":bson.ObjectIdHex(id)},
+		bson.M{"title": t.Title, "completed": t.Completed},
+	); err != nil {
+		rdr.JSON(w, http.StatusProcessing, rdr.M{
+			"message":"failed to update todo",
+			"error": err,
+		})
+		return 
+	}
 }
 
 func homeHandler() http.Handler {
