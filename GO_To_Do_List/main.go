@@ -53,7 +53,7 @@ func main() {
 	r.Mount("/todo", todoHandlers())
 
 	svr := &http.Server{
-		Address:      port,
+		Addr:         port,
 		Handler:      r,
 		ReadTimeout:  60 * time.Second,
 		WriteTimeout: 60 * time.Second,
