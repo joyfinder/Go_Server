@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -174,6 +175,11 @@ func updateTodo(w http.ResponseWriter, r *http.Request){
 	}
 
 	var t todo
+
+	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+		rdr.JSON(w, http.StatusProcessing, err)
+		return 
+	}
 }
 
 func homeHandler() http.Handler {
