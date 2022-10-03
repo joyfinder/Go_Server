@@ -198,7 +198,7 @@ func updateTodo(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func homeHandler() http.Handler {
+func todoHandlers() http.Handler {
 	rg := chi.NewRouter()
 	rg.Group(func(r chi.Router) {
 		r.Get("/", fetchTodos)
