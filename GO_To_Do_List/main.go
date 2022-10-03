@@ -130,14 +130,14 @@ func createTodo(w http.ResponseWriter, r *http.Request){
 	}
 	if err := db.C(collectionName).Insert(&tm); err != nil {
 		rdr.JSON(w, http.StatusProcessing, renderer.M{
-			"message":"Failed to save todo memo"
+			"message":"Failed to save todo memo",
 			"error":err,
 		})
 		return
 	}
 	rdr.JSON(w, http.StatusCreated, renderer.M{
-		"message":"todo created successfully"
-		"todo_id": tm.ID.Hex()
+		"message":"todo created successfully",
+		"todo_id": tm.ID.Hex(),
 	})
 }
 
@@ -146,7 +146,7 @@ func deleteTodo(w http.ResponseWriter, r *http.Request){
 
 	if !bson.IsObjectIdHex(id){
 		rdr.JSON(w, http.StatusBadRequest, renderer.M{
-			"message":"Id is invalid."
+			"message":"Id is invalid.",
 		})
 		return
 
@@ -159,7 +159,7 @@ func deleteTodo(w http.ResponseWriter, r *http.Request){
 		}
 
 		rdr.JSON(w, http.StatusOK, renderer.M{
-			"message":"deleted todo successfully"
+			"message":"deleted todo successfully",
 		})
 	}
 }
