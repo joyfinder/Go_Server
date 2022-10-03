@@ -65,7 +65,7 @@ func main() {
 		if err := svr.ListenAndServe(); err != nil {
 			log.Printf("listen:%s\n", err)
 		}
-	}
+	}()
 
 
 	<-stopChan
