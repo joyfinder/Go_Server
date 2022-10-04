@@ -33,6 +33,19 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 	results := []Search_Result{}
 
 	bingPages, err := buildBingUrls(search_word, country, pages, count)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, page := range bingPages{
+
+		rank := len(results)
+		scrapeClientRequest(page)
+		if err != nil{
+
+		}
+	}
 }
 
 func bingResultParser(){
