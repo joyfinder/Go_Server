@@ -167,7 +167,7 @@
             this.todo.todoIndex = todoIndex;
           },
           deleteTodo(todo, todoIndex){
-            if(confirm("Are you sure ?")){
+            if(confirm("Do you confirm deleting it or not?")){
               this.$http.delete('todo/'+todo.id).then(response => {
                 if(response.status == 200){
                   this.todos.splice(todoIndex, 1);
