@@ -29,11 +29,11 @@ func scrapeClientRequest() {
 
 }
 
-func bingScrape(){
+func bingScrape(search_word, country string)([]Search_Result){
 
 }
 
-func bingResultParser(search_word, country string)([]Search_Result){
+func bingResultParser(){
 
 }
 
