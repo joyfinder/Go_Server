@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 
 bingDomains = map[string]string{
@@ -43,8 +46,16 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 		rank := len(results)
 		scrapeClientRequest(page)
 		if err != nil{
-
+			return nil , err
 		}
+		data, err := bingResultParser(results, rank)
+		if err != nil{
+			return nil, err
+		}
+		for _, result := range data{
+			results = append(results, result)
+		}
+		time.Sleep(time.Duration(backoff)*time.Second)
 	}
 }
 
