@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 
 bingDomains = map[string]string{
 	"com":""
@@ -31,9 +33,19 @@ func bingScrape(){
 
 }
 
-func bingResultParser(){
-	
-}
-func main() {
+func bingResultParser(search_word, country string)([]Search_Result){
 
+}
+
+func main() {
+ result, err :=	bingScrape("Steven lu", "com")
+ if err != nil {
+	for _, result := range result{
+		fmt.Println(result)
+	}
+ }
+ else
+ {
+	fmt.Println(err)
+ }
 }
