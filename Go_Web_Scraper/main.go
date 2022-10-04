@@ -29,8 +29,10 @@ func scrapeClientRequest() {
 
 }
 
-func bingScrape(search_word, country string)([]Search_Result){
+func bingScrape(search_word, country string)([]Search_Result, error){
+	results := []Search_Result{}
 
+	bingPages, err := buildBingUrls(search_word, country, pages, count)
 }
 
 func bingResultParser(){
