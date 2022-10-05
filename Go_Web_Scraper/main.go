@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"golang.org/x/text/number"
 )
 
 
@@ -45,7 +47,10 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 }
 
 func firstParameter(number, count int){
-
+	if number == 0 {
+		return number + 1
+	}
+	return number * count + 1
 }
 
 func scrapeClientRequest() {
