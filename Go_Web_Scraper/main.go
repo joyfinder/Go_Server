@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -26,7 +27,18 @@ func randomUserAgent() string{
 
 func buildBingUrls(Search_Result, country string, pages, count int)([]string, error) {
 	toScrap := []string{}
+	Search_Result = strings.Trim(Search_Result, " ")
+	Search_Result = strings.ReplaceAll(Search_Result, " ", "+", -1)
+	if countryCode , found := bingDomains[country]; found{
+		for i := 0, i < pages; i++{
 
+		}
+	} else 
+	{
+		fmt.Errorf("country(%s)is currently not supported", coucountry)
+		return nil, err
+	}
+	return toScrap, err
 }
 
 func scrapeClientRequest() {
