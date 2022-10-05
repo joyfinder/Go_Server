@@ -55,6 +55,7 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 		for _, result := range data{
 			results = append(results, result)
 		}
+		// Adding back-off to handle scraping task
 		time.Sleep(time.Duration(backoff)*time.Second)
 	}
 }
