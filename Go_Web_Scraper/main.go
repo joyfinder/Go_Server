@@ -33,6 +33,7 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 		for i := 0, i < pages; i++{
 			first_page := firstParameter(i,count)
 			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first, count, countryCode)
+			toScrape = append(toScrape, scrapURL)
 		}
 	} 
 	else 
@@ -41,6 +42,10 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 		return nil, err
 	}
 	return toScrap, nil
+}
+
+func firstParameter(number, count int){
+
 }
 
 func scrapeClientRequest() {
