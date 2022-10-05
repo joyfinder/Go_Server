@@ -38,7 +38,7 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 		fmt.Errorf("country(%s)is currently not supported", coucountry)
 		return nil, err
 	}
-	return toScrap, err
+	return toScrap, nil
 }
 
 func scrapeClientRequest() {
@@ -71,6 +71,7 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 		// Adding back-off to handle scraping task
 		time.Sleep(time.Duration(backoff)*time.Second)
 	}
+	return results, nil
 }
 
 func bingResultParser(){
