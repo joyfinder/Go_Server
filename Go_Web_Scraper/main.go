@@ -24,7 +24,8 @@ func randomUserAgent() string{
 
 }
 
-func buildBingUrls() {
+func buildBingUrls(Search_Result, country string, pages, count int)([]string, error) {
+	toScrap := []string{}
 
 }
 
