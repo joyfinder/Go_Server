@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -53,7 +54,7 @@ func firstParameter(number, count int){
 	return number * count + 1
 }
 
-func scrapeClientRequest() {
+func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 
 }
 
