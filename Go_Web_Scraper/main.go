@@ -63,7 +63,10 @@ func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 func getScrapClient(proxyString interface{}) *http.Client{
 	switch v := proxyString.(type){
 	case string:
-		proxyString, _ := url.Parse(v)
+		proxyUrl, _ := url.Parse(v)
+		return &http.Client{Transport: &http.Transport{Proxy: http.ProxyURL(proxyUrl)}}
+	default:
+		return &http.Client{}
 	}
 }
 
