@@ -132,6 +132,15 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 		descTag := descTag.Text()
 		desc := descTag.Text()
 		title := titleTag.Text()
+		link = strings.Trim(link, " ")
+		if link != "" && link != "#" && !strings.hasPrefix(link, "/"){
+			results := Search_Result{
+				rank,
+				link,
+				title,
+				desc
+			}
+		}
 	}
 }
 
