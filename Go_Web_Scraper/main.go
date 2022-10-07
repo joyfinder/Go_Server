@@ -65,6 +65,11 @@ func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 	req.Header.Set("User-Agent", randomUserAgent())
 
 	res, err := baseClient.Do(req)
+	if res.StatusCode != 200 {
+		err := fmt.Errorf("scraper received a non-200 status code suggesting a ban")
+		return nil, err
+	}
+
 }
 
 func getScrapClient(proxyString interface{}) *http.Client{
