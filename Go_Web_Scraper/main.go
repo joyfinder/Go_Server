@@ -73,6 +73,7 @@ func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 	if err != nil{
 		return nil, err
 	}
+	return res, nil
 }
 
 func getScrapClient(proxyString interface{}) *http.Client{
