@@ -116,7 +116,10 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 }
 
 func bingResultParser(response *http.Response, rank int)([]Search_Result, error){
-
+	doc, err := goquery.NewDocumentFromResponse(response)
+	if err != nil {
+		return nil, err
+	}
 }
 
 func main() {
