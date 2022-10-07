@@ -26,7 +26,9 @@ type Search_Result struct{
 }
 
 func randomUserAgent() string{
-
+rand.Seed(time.Now().Unix())
+randNum := rand.Int()%len(userAgents)
+return userAgents[randNum]
 }
 
 func buildBingUrls(Search_Result, country string, pages, count int)([]string, error) {
@@ -58,6 +60,8 @@ func firstParameter(number, count int){
 func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 	
 	baseClient := getScrapeClient(proxyString)
+	req, _ := http.NewRequest("GET", Search_Result, nil)
+	req.Header.Set("User-Agent", randomUserAgent())
 }
 
 func getScrapClient(proxyString interface{}) *http.Client{
