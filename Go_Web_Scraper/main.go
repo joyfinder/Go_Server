@@ -63,6 +63,17 @@ func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 	baseClient := getScrapeClient(proxyString)
 	req, _ := http.NewRequest("GET", Search_Result, nil)
 	req.Header.Set("User-Agent", randomUserAgent())
+
+	res, err := baseClient.Do(req)
+	if res.StatusCode != 200 {
+		err := fmt.Errorf("scraper received a non-200 status code suggesting a ban")
+		return nil, err
+	}
+
+	if err != nil{
+		return nil, err
+	}
+	return res, nil
 }
 
 func getScrapClient(proxyString interface{}) *http.Client{
@@ -104,8 +115,20 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 	return results, nil
 }
 
-func bingResultParser(){
+func bingResultParser(response *http.Response, rank int)([]Search_Result, error){
+	doc, err := goquery.NewDocumentFromResponse(response)
+	if err != nil {
+		return nil, err
+	}
+	results := []Search_Result{}
+	sel := doc.Find("in")
+	rank++
 
+	for i := range sel.Nodes {
+		item := sel.Eq(i)
+		linkTag := item.Find("a")
+		link, _ := linkTag.Attr("href")
+	}
 }
 
 func main() {
