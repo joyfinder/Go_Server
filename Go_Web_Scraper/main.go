@@ -115,7 +115,7 @@ func bingScrape(search_word, country string)([]Search_Result, error){
 	return results, nil
 }
 
-func bingResultParser(){
+func bingResultParser(response *http.Response, rank int)([]Search_Result, error){
 
 }
 
