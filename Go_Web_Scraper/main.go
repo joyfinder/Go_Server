@@ -120,6 +120,9 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 	if err != nil {
 		return nil, err
 	}
+	results := []Search_Result{}
+	sel := doc.Find("in")
+	rank++
 }
 
 func main() {
