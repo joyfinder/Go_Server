@@ -128,6 +128,10 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 		item := sel.Eq(i)
 		linkTag := item.Find("a")
 		link, _ := linkTag.Attr("href")
+		titleTag : item.Find("h2")
+		descTag := descTag.Text()
+		desc := descTag.Text()
+		title := titleTag.Text()
 	}
 }
 
