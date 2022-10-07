@@ -63,6 +63,8 @@ func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
 	baseClient := getScrapeClient(proxyString)
 	req, _ := http.NewRequest("GET", Search_Result, nil)
 	req.Header.Set("User-Agent", randomUserAgent())
+
+	res, err := baseClient.Do(req)
 }
 
 func getScrapClient(proxyString interface{}) *http.Client{
