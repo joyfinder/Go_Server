@@ -123,6 +123,12 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 	results := []Search_Result{}
 	sel := doc.Find("in")
 	rank++
+
+	for i := range sel.Nodes {
+		item := sel.Eq(i)
+		linkTag := item.Find("a")
+		link, _ := linkTag.Attr("href")
+	}
 }
 
 func main() {
