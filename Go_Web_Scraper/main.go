@@ -140,8 +140,11 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 				title,
 				desc
 			}
+			results = append(results, result)
+			rank++
 		}
 	}
+	return results, err
 }
 
 func main() {
