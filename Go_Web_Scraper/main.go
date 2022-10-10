@@ -12,7 +12,10 @@ import (
 
 
 bingDomains = map[string]string{
-	"com":""
+	"com":"",
+	"uk":"&cc=GB",
+	"us":"&cc=US",
+	"tw":"&cc=TW",
 }
 
 var userAgents = []string{
@@ -147,7 +150,7 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 	return results, err
 }
 
-func main() {
+func main(){
  result, err :=	bingScrape("Steven lu", "com")
  if err != nil {
 	for _, result := range result{
