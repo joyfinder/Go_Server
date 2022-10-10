@@ -139,7 +139,7 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 				rank,
 				link,
 				title,
-				desc
+				desc,
 			}
 			results = append(results, result)
 			rank++
