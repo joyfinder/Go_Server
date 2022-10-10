@@ -59,7 +59,7 @@ func firstParameter(number, count int){
 	return number * count + 1
 }
 
-func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
+func scrapeClientRequest(searchURL string, )(*http.Response, error) {
 	
 	baseClient := getScrapeClient(proxyString)
 	req, _ := http.NewRequest("GET", Search_Result, nil)
