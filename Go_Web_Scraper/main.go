@@ -40,7 +40,7 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 	Search_Result = strings.Trim(Search_Result, " ")
 	Search_Result = strings.ReplaceAll(Search_Result, " ", "+", -1)
 	if countryCode , found := bingDomains[country]; found{
-		for i := 0, i < pages; i++{
+		for i := 0; i < pages; i++{
 			first_page := firstParameter(i,count)
 			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first, count, countryCode)
 			toScrape = append(toScrape, scrapURL)
