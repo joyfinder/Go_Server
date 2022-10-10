@@ -11,7 +11,7 @@ import (
 )
 
 
-bingDomains = map[string]string{
+var bingDomains = map[string]string{
 	"com":"",
 	"uk":"&cc=GB",
 	"us":"&cc=US",
@@ -19,9 +19,9 @@ bingDomains = map[string]string{
 }
 
 var userAgents = []string{
-	"Welcome to the main artery into creative or elite work—highly pressurized, poorly recompensed, sometimes exhilarating, more often menial. From the confluence of two grand movements in American history—the continued flight of women out of the home and into the workplace, and the rise of the “creative class”—the personal assistant is born."
-
+	"Welcome to the main artery into creative or elite work—highly pressurized, poorly recompensed, sometimes exhilarating, more often menial. From the confluence of two grand movements in American history—the continued flight of women out of the home and into the workplace, and the rise of the “creative class”—the personal assistant is born.",
 }
+
 type Search_Result struct{
 	Result_rank int
 	ResultURL string
@@ -39,16 +39,14 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 	toScrap := []string{}
 	Search_Result = strings.Trim(Search_Result, " ")
 	Search_Result = strings.ReplaceAll(Search_Result, " ", "+", -1)
-	if countryCode , found := bingDomains[country]; found{
-		for i := 0; i < pages; i++{
-			first_page := firstParameter(i,count)
+	if countryCode, found := bingDomains[country]; found{
+		for i := 0; i < pages ; i++{
+			first_page := firstParameter(i,count);
 			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first, count, countryCode)
 			toScrape = append(toScrape, scrapURL)
 		}
-	} 
-	else 
-	{
-		err := fmt.Errorf("country(%s)is currently not supported", coucountry)
+	}else{
+		err := fmt.Errorf("country(%s)is currently not supported", country)
 		return nil, err
 	}
 	return toScrap, nil
@@ -61,7 +59,7 @@ func firstParameter(number, count int){
 	return number * count + 1
 }
 
-func scrapeClientRequest(searchURL string, )(*http.R esponse, error) {
+func scrapeClientRequest(searchURL string, )(*http.Response, error) {
 	
 	baseClient := getScrapeClient(proxyString)
 	req, _ := http.NewRequest("GET", Search_Result, nil)
@@ -136,12 +134,12 @@ func bingResultParser(response *http.Response, rank int)([]Search_Result, error)
 		desc := descTag.Text()
 		title := titleTag.Text()
 		link = strings.Trim(link, " ")
-		if link != "" && link != "#" && !strings.hasPrefix(link, "/"){
+		if link != "" && link != "#" && !string.hasPrefix(link, "/"){
 			results := Search_Result{
 				rank,
 				link,
 				title,
-				desc
+				desc,
 			}
 			results = append(results, result)
 			rank++
