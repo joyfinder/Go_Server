@@ -19,9 +19,9 @@ bingDomains = map[string]string{
 }
 
 var userAgents = []string{
-	"Welcome to the main artery into creative or elite work—highly pressurized, poorly recompensed, sometimes exhilarating, more often menial. From the confluence of two grand movements in American history—the continued flight of women out of the home and into the workplace, and the rise of the “creative class”—the personal assistant is born."
-
+	"Welcome to the main artery into creative or elite work—highly pressurized, poorly recompensed, sometimes exhilarating, more often menial. From the confluence of two grand movements in American history—the continued flight of women out of the home and into the workplace, and the rise of the “creative class”—the personal assistant is born.",
 }
+
 type Search_Result struct{
 	Result_rank int
 	ResultURL string
