@@ -11,7 +11,7 @@ import (
 )
 
 
-bingDomains = map[string]string{
+var bingDomains = map[string]string{
 	"com":"",
 	"uk":"&cc=GB",
 	"us":"&cc=US",
