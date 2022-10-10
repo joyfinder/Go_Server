@@ -48,7 +48,7 @@ func buildBingUrls(Search_Result, country string, pages, count int)([]string, er
 	} 
 	else 
 	{
-		fmt.Errorf("country(%s)is currently not supported", coucountry)
+		err := fmt.Errorf("country(%s)is currently not supported", coucountry)
 		return nil, err
 	}
 	return toScrap, nil
