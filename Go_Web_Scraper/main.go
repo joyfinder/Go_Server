@@ -43,7 +43,7 @@ func buildBingUrls(Search_Result, country string, pages, count int) ([]string, e
 		for i := 0; i < pages; i++ {
 			first_page := firstParameter(i, count)
 			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first_page, count, countryCode)
-			toScrape = append(toScrape, scrapURL)
+			toScrap = append(toScrap, scrapURL)
 		}
 	} else {
 		err := fmt.Errorf("country(%s)is currently not supported", country)
