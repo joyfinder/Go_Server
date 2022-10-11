@@ -149,7 +149,7 @@ func bingResultParser(response *http.Response, rank int) ([]Search_Result, error
 }
 
 func main() {
-	result, err := bingScrape("Steven lu", "com")
+	result, err := bingScrape("Steven lu", "com", nil, 20, 10, 5)
 	if err != nil {
 		for _, result := range result {
 			fmt.Println(result)
