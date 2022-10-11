@@ -87,7 +87,7 @@ func getScrapClient(proxyString interface{}) *http.Client {
 	}
 }
 
-func bingScrape(search_word, country string) ([]Search_Result, error) {
+func bingScrape(search_word, country string, proxyString interface{}, pages, count, backoff int) ([]Search_Result, error) {
 	results := []Search_Result{}
 
 	bingPages, err := buildBingUrls(search_word, country, pages, count)
