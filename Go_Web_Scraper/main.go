@@ -38,12 +38,12 @@ func randomUserAgent() string {
 func buildBingUrls(Search_Result, country string, pages, count int) ([]string, error) {
 	toScrap := []string{}
 	Search_Result = strings.Trim(Search_Result, " ")
-	Search_Result = strings.ReplaceAll(Search_Result, " ", "+", -1)
+	Search_Result = strings.Replace(Search_Result, " ", "+", -1)
 	if countryCode, found := bingDomains[country]; found {
 		for i := 0; i < pages; i++ {
 			first_page := firstParameter(i, count)
-			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first, count, countryCode)
-			toScrape = append(toScrape, scrapURL)
+			scrapURL := fmt.Sprintf("https://bing.com/search?q=%s&first=%d&count=%d%s", Search_Result, first_page, count, countryCode)
+			toScrap = append(toScrap, scrapURL)
 		}
 	} else {
 		err := fmt.Errorf("country(%s)is currently not supported", country)
@@ -52,17 +52,17 @@ func buildBingUrls(Search_Result, country string, pages, count int) ([]string, e
 	return toScrap, nil
 }
 
-func firstParameter(number, count int) {
+func firstParameter(number, count int) int {
 	if number == 0 {
 		return number + 1
 	}
 	return number*count + 1
 }
 
-func scrapeClientRequest(searchURL string) (*http.Response, error) {
+func scrapeClientRequest(searchURL string, proxyString interface{}) (*http.Response, error) {
 
-	baseClient := getScrapeClient(proxyString)
-	req, _ := http.NewRequest("GET", Search_Result, nil)
+	baseClient := getScrapClient(proxyString)
+	req, _ := http.NewRequest("GET", searchURL, nil)
 	req.Header.Set("User-Agent", randomUserAgent())
 
 	res, err := baseClient.Do(req)
@@ -87,7 +87,7 @@ func getScrapClient(proxyString interface{}) *http.Client {
 	}
 }
 
-func bingScrape(search_word, country string) ([]Search_Result, error) {
+func bingScrape(search_word, country string, proxyString interface{}, pages, count, backoff int) ([]Search_Result, error) {
 	results := []Search_Result{}
 
 	bingPages, err := buildBingUrls(search_word, country, pages, count)
@@ -99,11 +99,11 @@ func bingScrape(search_word, country string) ([]Search_Result, error) {
 	for _, page := range bingPages {
 
 		rank := len(results)
-		scrapeClientRequest(page)
+		res, err := scrapeClientRequest(page, proxyString)
 		if err != nil {
 			return nil, err
 		}
-		data, err := bingResultParser(results, rank)
+		data, err := bingResultParser(res, rank)
 		if err != nil {
 			return nil, err
 		}
