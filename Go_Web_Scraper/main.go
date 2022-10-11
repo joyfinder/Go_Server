@@ -99,7 +99,7 @@ func bingScrape(search_word, country string, proxyString interface{}, pages, cou
 	for _, page := range bingPages {
 
 		rank := len(results)
-		res, err = scrapeClientRequest(page, proxyString)
+		res, err := scrapeClientRequest(page, proxyString)
 		if err != nil {
 			return nil, err
 		}
