@@ -61,6 +61,7 @@ func firstParameter(number, count int) int {
 
 func scrapeClientRequest(searchURL string, proxyString interface{}) (*http.Response, error) {
 
+	fmt.Println("Loading scrapClientRequest.")
 	baseClient := getScrapClient(proxyString)
 	req, _ := http.NewRequest("GET", searchURL, nil)
 	req.Header.Set("User-Agent", randomUserAgent())
@@ -149,7 +150,7 @@ func bingResultParser(response *http.Response, rank int) ([]Search_Result, error
 }
 
 func main() {
-	result, err := bingScrape("Steven lu", "com", nil, 20, 10, 5)
+	result, err := bingScrape("Steven lu", "com", nil, 5, 4, 1)
 	if err != nil {
 		for _, result := range result {
 			fmt.Println(result)
