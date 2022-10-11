@@ -59,10 +59,10 @@ func firstParameter(number, count int) int {
 	return number*count + 1
 }
 
-func scrapeClientRequest(searchURL string) (*http.Response, error) {
+func scrapeClientRequest(searchURL string, proxyString interface{}) (*http.Response, error) {
 
 	baseClient := getScrapClient(proxyString)
-	req, _ := http.NewRequest("GET", Search_Result, nil)
+	req, _ := http.NewRequest("GET", searchURL, nil)
 	req.Header.Set("User-Agent", randomUserAgent())
 
 	res, err := baseClient.Do(req)
