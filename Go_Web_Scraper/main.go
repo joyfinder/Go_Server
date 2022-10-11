@@ -52,7 +52,7 @@ func buildBingUrls(Search_Result, country string, pages, count int) ([]string, e
 	return toScrap, nil
 }
 
-func firstParameter(number, count int) {
+func firstParameter(number, count int) int {
 	if number == 0 {
 		return number + 1
 	}
