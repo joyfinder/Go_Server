@@ -38,7 +38,7 @@ func randomUserAgent() string {
 func buildBingUrls(Search_Result, country string, pages, count int) ([]string, error) {
 	toScrap := []string{}
 	Search_Result = strings.Trim(Search_Result, " ")
-	Search_Result = strings.ReplaceAll(Search_Result, " ", "+", -1)
+	Search_Result = strings.Replace(Search_Result, " ", "+", -1)
 	if countryCode, found := bingDomains[country]; found {
 		for i := 0; i < pages; i++ {
 			first_page := firstParameter(i, count)
