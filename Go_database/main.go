@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type Address struct {
 	City    string
@@ -17,5 +20,10 @@ type User struct {
 }
 
 func main() {
+	dir := "./"
 
+	db, err := New(dir, nil)
+	if err != nil {
+		fmt.Println("Error", err)
+	}
 }
