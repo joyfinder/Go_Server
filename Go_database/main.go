@@ -45,4 +45,10 @@ func main() {
 			Address: value.Address,
 		})
 	}
+
+	records, err := db.ReadAll("users")
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(records)
 }
