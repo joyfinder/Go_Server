@@ -35,4 +35,14 @@ func main() {
 		{"Steph", "23", "2334333", "Google", Address{"indo", "asd", "thai", "15235524"}},
 		{"Even", "23", "2334333", "Unicorn", Address{"indo", "asd", "thai", "12124"}},
 	}
+
+	for _, value := range employees {
+		db.Write("users", value.Name, User{
+			Name:    value.Name,
+			Contact: value.Contact,
+			Company: value.Company,
+			Age:     value.Age,
+			Address: value.Address,
+		})
+	}
 }
