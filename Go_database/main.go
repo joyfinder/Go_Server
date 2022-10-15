@@ -50,7 +50,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Error", err)
 	}
-	fmt.Println(record)
+	fmt.Println(records)
 
 	all_users := []User{}
 
