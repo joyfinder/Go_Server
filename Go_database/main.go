@@ -50,5 +50,11 @@ func main() {
 	if err != nil {
 		fmt.Println("Error", err)
 	}
-	fmt.Println(records)
+	fmt.Println(record)
+
+	all_users := []User{}
+
+	for _, f := range records {
+		employees := User{}
+	}
 }
