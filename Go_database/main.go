@@ -61,4 +61,9 @@ func main() {
 		}
 		all_users = append(all_users, employeeFound)
 	}
+	fmt.Println((all_users))
+
+	// db.Delete("user", "John"); err != nil{
+	// 	fmt.Println("Error",err)
+	// }
 }
