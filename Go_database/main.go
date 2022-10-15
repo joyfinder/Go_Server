@@ -51,4 +51,19 @@ func main() {
 		fmt.Println("Error", err)
 	}
 	fmt.Println(records)
+
+	all_users := []User{}
+
+	for _, f := range records {
+		employeeFound := User{}
+		if err := json.Unmarshal([]byte(f), &employeeFound); err != nil {
+			fmt.Println("Error", err)
+		}
+		all_users = append(all_users, employeeFound)
+	}
+	fmt.Println((all_users))
+
+	// db.Delete("user", "John"); err != nil{
+	// 	fmt.Println("Error",err)
+	// }
 }
