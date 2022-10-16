@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"sync"
 )
 
 type (
@@ -14,7 +15,12 @@ type (
 		Debug(string, ...interface{})
 		Trace(string, ...interface{})
 	}
-	Driver
+	Driver struct {
+		mutex   sync.Mutex
+		mutexes map[string]*sync.Mutex
+		dir     string
+		log     Logger
+	}
 )
 
 type Address struct {
