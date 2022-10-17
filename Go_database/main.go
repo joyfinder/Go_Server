@@ -39,6 +39,18 @@ func Read() error {
 
 }
 
+func ReadAll() {
+
+}
+
+func Delete() error {
+
+}
+
+func getOrCreateMutex() *sync.Mutex {
+
+}
+
 type Address struct {
 	City    string
 	State   string
