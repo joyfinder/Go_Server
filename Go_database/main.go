@@ -31,6 +31,14 @@ func New() {
 
 }
 
+func Write() error {
+
+}
+
+func Read() error {
+
+}
+
 type Address struct {
 	City    string
 	State   string
