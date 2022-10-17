@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"sync"
 )
 
@@ -27,8 +28,8 @@ type Options struct {
 	Logger
 }
 
-func New() {
-
+func (dir string, options *Options)(*Driver, error) New {
+	dir = filepath.Clean(dir)
 }
 
 func (d *Driver) Write() error {
