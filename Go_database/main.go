@@ -23,6 +23,10 @@ type (
 	}
 )
 
+type Options struct {
+	Logger
+}
+
 type Address struct {
 	City    string
 	State   string
