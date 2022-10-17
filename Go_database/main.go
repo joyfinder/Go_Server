@@ -27,6 +27,10 @@ type Options struct {
 	Logger
 }
 
+func New() {
+
+}
+
 type Address struct {
 	City    string
 	State   string
