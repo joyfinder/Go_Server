@@ -31,11 +31,11 @@ func New() {
 
 }
 
-func Write() error {
+func (d *Driver) Write() error {
 
 }
 
-func Read() error {
+func (d *Driver) Read() error {
 
 }
 
