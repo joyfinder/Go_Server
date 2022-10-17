@@ -39,15 +39,15 @@ func (d *Driver) Read() error {
 
 }
 
-func ReadAll() {
+func (d *Driver) ReadAll() {
 
 }
 
-func Delete() error {
+func (d *Driver) Delete() error {
 
 }
 
-func getOrCreateMutex() *sync.Mutex {
+func (d *Driver) getOrCreateMutex() *sync.Mutex {
 
 }
 
