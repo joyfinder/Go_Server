@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"path/filepath"
 	"sync"
+
+	"github.com/jcelliott/lumber"
 )
 
 type (
@@ -28,8 +30,18 @@ type Options struct {
 	Logger
 }
 
-func (dir string, options *Options)(*Driver, error) New {
+func New(dir string, options *Options) (*Driver, error) {
 	dir = filepath.Clean(dir)
+
+	opts := Options{}
+
+	if options != nil {
+		opts = *options
+	}
+
+	if opts.Logger == nil {
+		opts.Logger = lumber.NewConsoleLogger((lumber.INFO))
+	}
 }
 
 func (d *Driver) Write() error {
