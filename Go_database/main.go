@@ -65,7 +65,7 @@ func stat(path string) (file os.FileInfo, err error) {
 	}
 	return
 }
-func (d *Driver) Write() error {
+func (d *Driver) Write(collection, resource string, v interface{}) error {
 
 }
 
