@@ -42,6 +42,12 @@ func New(dir string, options *Options) (*Driver, error) {
 	if opts.Logger == nil {
 		opts.Logger = lumber.NewConsoleLogger((lumber.INFO))
 	}
+
+	driver := Driver{
+		dir:     dir,
+		mutexes: make(map[string]*sync.Mutex),
+		log:     opts.Logger,
+	}
 }
 
 func (d *Driver) Write() error {
