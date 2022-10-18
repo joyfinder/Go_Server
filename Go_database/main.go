@@ -59,6 +59,12 @@ func New(dir string, options *Options) (*Driver, error) {
 	return &driver, os.MkdirAll(dir, 0755)
 }
 
+func stat(path string) (file os.FileInfo, err error) {
+	if file, err = os.Stat(path); os.IsNotExist(err) {
+		file, err = os.Stat(path + ".json")
+	}
+	return
+}
 func (d *Driver) Write() error {
 
 }
