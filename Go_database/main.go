@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path/filepath"
 	"sync"
 
@@ -47,6 +48,11 @@ func New(dir string, options *Options) (*Driver, error) {
 		dir:     dir,
 		mutexes: make(map[string]*sync.Mutex),
 		log:     opts.Logger,
+	}
+
+	if _, err := os.Stat(dir); err == nil {
+		opts.Logger.Debug("Using '%s' (database already exists)\n", dir)
+		return &driver, nil
 	}
 }
 
