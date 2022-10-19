@@ -66,7 +66,17 @@ func stat(path string) (file os.FileInfo, err error) {
 	return
 }
 func (d *Driver) Write(collection, resource string, v interface{}) error {
+	if collection == "" {
+		return fmt.Errorf("Missing colleciton - no place to save record!")
+	}
 
+	if resource == "" {
+		return fmt.Errorf("Missing resource - unable to save record!")
+	}
+
+	mutex := d.getOrCreateMutex(collection)
+	mutex.Lock()
+	defer mutex.Unlock()
 }
 
 func (d *Driver) Read() error {
