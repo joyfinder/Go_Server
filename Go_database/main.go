@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
@@ -87,6 +88,10 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 	}
 
 	b = append(b, byte('\n'))
+
+	if err := ioutil.WriteFile(tmpPath, b, 0644); err != nil {
+		return err
+	}
 }
 
 func (d *Driver) Read() error {
