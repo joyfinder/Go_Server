@@ -77,6 +77,10 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 	mutex := d.getOrCreateMutex(collection)
 	mutex.Lock()
 	defer mutex.Unlock()
+
+	dir := filepath.Join(d.dir, collection)
+	finalPath := filepath.Join(d.dir, resource+".json")
+	tmpPath := filepath + ".tmp"
 }
 
 func (d *Driver) Read() error {
