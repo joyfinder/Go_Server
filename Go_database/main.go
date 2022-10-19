@@ -81,6 +81,12 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 	dir := filepath.Join(d.dir, collection)
 	finalPath := filepath.Join(d.dir, resource+".json")
 	tmpPath := filepath + ".tmp"
+
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return err
+	}
+
+	b = append(b, byte('\n'))
 }
 
 func (d *Driver) Read() error {
