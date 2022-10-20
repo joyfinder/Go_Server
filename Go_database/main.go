@@ -94,7 +94,7 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 	}
 }
 
-func (d *Driver) Read() error {
+func (d *Driver) Read(collection, resource string, v interface{}) error {
 
 }
 
