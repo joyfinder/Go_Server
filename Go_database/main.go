@@ -94,7 +94,7 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 	}
 }
 
-func (d *Driver) Read() error {
+func (d *Driver) Read(collection, resource string, v interface{}) error {
 
 }
 
@@ -108,6 +108,14 @@ func (d *Driver) Delete() error {
 
 func (d *Driver) getOrCreateMutex() *sync.Mutex {
 
+	d.mutex.Lock()
+	defer d.mutex.Unlock()
+	m, ok := d.mutexes[collection]
+
+	if !ok {
+		m = &sync.Mutex{}
+		d.mutexes[collection] = m
+	}
 }
 
 type Address struct {
