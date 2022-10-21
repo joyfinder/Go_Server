@@ -106,6 +106,14 @@ func (d *Driver) Read(collection, resource string, v interface{}) error {
 
 	record := filepath.Join(d.dir, collection, resource)
 
+	if _, err := stat(record); err != nil {
+		return err
+	}
+
+	b, err := ioutil.ReadFile(record + ".json")
+	if err != nil {
+		return err
+	}
 }
 
 func (d *Driver) ReadAll() {
