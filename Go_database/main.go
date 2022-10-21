@@ -96,6 +96,16 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 
 func (d *Driver) Read(collection, resource string, v interface{}) error {
 
+	if collection == "" {
+		return fmt.Errorf("Missing collection - no place to save record!")
+	}
+
+	if resource == "" {
+		return fmt.Errorf("Missing resource - unable to save record!")
+	}
+
+	record := filepath.Join(d.dir, collection, resource)
+
 }
 
 func (d *Driver) ReadAll() {
