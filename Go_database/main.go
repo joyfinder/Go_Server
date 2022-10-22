@@ -120,7 +120,7 @@ func (d *Driver) Read(collection, resource string, v interface{}) error {
 	return json.Unmarshal(b, &v)
 }
 
-func (d *Driver) ReadAll() {
+func (d *Driver) ReadAll(collection string) ([]string, error) {
 
 }
 
