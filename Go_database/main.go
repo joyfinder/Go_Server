@@ -125,6 +125,18 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 		return nil, fmt.Errorf("Missing collection")
 	}
 	dir := filepath.Join(d.dir, collection)
+
+	if _, err := stat(dir); err != nil {
+		return nil, err
+	}
+
+	files, _ := ioutil.ReadDir(dir)
+
+	var records []string 
+
+	for _, range files{
+		ioutil.ReadFile
+	}
 }
 
 func (d *Driver) Delete() error {
