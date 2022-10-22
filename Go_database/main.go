@@ -135,7 +135,10 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 	var records []string 
 
 	for _, range files{
-		ioutil.ReadFile
+		b, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
+		if err != nil {
+			return nil, err
+		}
 	}
 }
 
