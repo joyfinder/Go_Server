@@ -103,7 +103,7 @@ func (d *Driver) Read(collection, resource string, v interface{}) error {
 	}
 
 	if resource == "" {
-		return fmt.Errorf("Missing resource - unable to save record!")
+		return fmt.Errorf("Missing resource - unable to read record!")
 	}
 
 	record := filepath.Join(d.dir, collection, resource)
@@ -121,7 +121,10 @@ func (d *Driver) Read(collection, resource string, v interface{}) error {
 }
 
 func (d *Driver) ReadAll(collection string) ([]string, error) {
-
+	if collection == "" {
+		return nil, fmt.Errorf("Missing collection")
+	}
+	dir := filepath.Join(d.dir, collection)
 }
 
 func (d *Driver) Delete() error {
