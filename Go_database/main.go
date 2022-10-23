@@ -138,15 +138,15 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 		b, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
 		if err != nil {
 			return nil, err
-		}
+		} 
 
 		records = append(records, string(b))
 	}
 	return records, nil
 }
 
-func (d *Driver) Delete() error {
-
+func (d *Driver) Delete(collection, resource string) error {
+	path := filePath.Join()
 }
 
 func (d *Driver) getOrCreateMutex() *sync.Mutex {
