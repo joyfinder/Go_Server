@@ -132,9 +132,9 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 
 	files, _ := ioutil.ReadDir(dir)
 
-	var records []string 
+	var records []string
 
-	for _, range files{
+	for _, file := range files {
 		b, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
 		if err != nil {
 			return nil, err
@@ -145,11 +145,30 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 	return records, nil
 }
 
-func (d *Driver) Delete() error {
+func (d *Driver) Delete(collection, resource string) error {
+	path := filePath.Join(collection, resource)
 
+	// mutex: a program object, allowing multiple threads for sharing the identical resource, e.g. access to file
+	mutex := d.getOrCreateMutex(collection)
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	dir := filepath.Join(d.dir, path)
+
+	switch file, err := stat(dir); {
+	case file == nil, err != nil:
+		return fmt.Errorf("Unable to find file or directory named %v\n", path)
+
+	case file.Mode().IsDir():
+		return os.RemoveAll(dir)
+
+	case file.Mode().IsRegular():
+		return os.RemoveAll(dir + ".json")
+	}
+	return nil
 }
 
-func (d *Driver) getOrCreateMutex() *sync.Mutex {
+func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
 
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
