@@ -1,0 +1,12 @@
+{
+    "Name": "Stephen",
+    "Age": 33,
+    "Contact": "1928371289",
+    "Company": "WFH",
+    "Address": {
+        "City": "tokyo",
+        "State": "kanto",
+        "Country": "japan",
+        "Pincode": 1294
+    }
+}
