@@ -146,7 +146,8 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 }
 
 func (d *Driver) Delete(collection, resource string) error {
-	path := filePath.Join()
+	path := filePath.Join(collection, resource)
+	mutex := d.getOrCreateMutex(collection)
 }
 
 func (d *Driver) getOrCreateMutex() *sync.Mutex {
