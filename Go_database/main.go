@@ -158,7 +158,14 @@ func (d *Driver) Delete(collection, resource string) error {
 	switch file, err := stat(dir); {
 	case file == nil, err != nil:
 		return fmt.Errorf("Unable to find file or directory named %v\n", path)
+	
+	case file.Mode().IsDir():
+		return os.RemoveAll(dir)
+	
+	case file.Mode().IsRegular():
+		return os.RemoveAll(dir + ".json")
 	}
+	return nil
 }
 
 func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
