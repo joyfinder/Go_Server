@@ -150,6 +150,15 @@ func (d *Driver) Delete(collection, resource string) error {
 
 	// mutex: a program object, allowing multiple threads for sharing the identical resource, e.g. access to file
 	mutex := d.getOrCreateMutex(collection)
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	dir := filepath.Join(d.dir, path)
+
+	switch file, err := stat(dir); {
+	case file == nil, err != nil:
+		return fmt.Errorf("Unable to find file or directory named %v\n", path)
+	}
 }
 
 func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
