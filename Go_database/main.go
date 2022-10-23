@@ -132,13 +132,13 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 
 	files, _ := ioutil.ReadDir(dir)
 
-	var records []string 
+	var records []string
 
-	for _, range files{
+	for _, file := range files {
 		b, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
 		if err != nil {
 			return nil, err
-		} 
+		}
 
 		records = append(records, string(b))
 	}
@@ -158,10 +158,10 @@ func (d *Driver) Delete(collection, resource string) error {
 	switch file, err := stat(dir); {
 	case file == nil, err != nil:
 		return fmt.Errorf("Unable to find file or directory named %v\n", path)
-	
+
 	case file.Mode().IsDir():
 		return os.RemoveAll(dir)
-	
+
 	case file.Mode().IsRegular():
 		return os.RemoveAll(dir + ".json")
 	}
