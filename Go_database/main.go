@@ -152,7 +152,7 @@ func (d *Driver) Delete(collection, resource string) error {
 	mutex := d.getOrCreateMutex(collection)
 }
 
-func (d *Driver) getOrCreateMutex() *sync.Mutex {
+func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
 
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
