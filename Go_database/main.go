@@ -146,7 +146,7 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 }
 
 func (d *Driver) Delete(collection, resource string) error {
-	path := filePath.Join(collection, resource)
+	path := filepath.Join(collection, resource)
 
 	// mutex: a program object, allowing multiple threads for sharing the identical resource, e.g. access to file
 	mutex := d.getOrCreateMutex(collection)
