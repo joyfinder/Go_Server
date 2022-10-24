@@ -178,6 +178,7 @@ func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
 		m = &sync.Mutex{}
 		d.mutexes[collection] = m
 	}
+	return m
 }
 
 type Address struct {
