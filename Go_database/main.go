@@ -87,6 +87,10 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 		return err
 	}
 
+	b, err := json.MarshalIndent(v, "", "\t")
+	if err != nil {
+		return err
+	}
 	b = append(b, byte('\n'))
 
 	if err := ioutil.WriteFile(tmpPath, b, 0644); err != nil {
@@ -146,7 +150,7 @@ func (d *Driver) ReadAll(collection string) ([]string, error) {
 }
 
 func (d *Driver) Delete(collection, resource string) error {
-	path := filePath.Join(collection, resource)
+	path := filepath.Join(collection, resource)
 
 	// mutex: a program object, allowing multiple threads for sharing the identical resource, e.g. access to file
 	mutex := d.getOrCreateMutex(collection)
@@ -178,6 +182,7 @@ func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex {
 		m = &sync.Mutex{}
 		d.mutexes[collection] = m
 	}
+	return m
 }
 
 type Address struct {
@@ -238,7 +243,7 @@ func main() {
 	}
 	fmt.Println((all_users))
 
-	// db.Delete("user", "John"); err != nil{
-	// 	fmt.Println("Error",err)
+	// if err := db.Delete("database", "Steph"); err != nil {
+	// 	fmt.Println("Error", err)
 	// }
 }
