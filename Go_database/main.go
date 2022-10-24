@@ -87,6 +87,10 @@ func (d *Driver) Write(collection, resource string, v interface{}) error {
 		return err
 	}
 
+	b, err := json.MarshalIndent(v, "", "\t")
+	if err != nil {
+		return err
+	}
 	b = append(b, byte('\n'))
 
 	if err := ioutil.WriteFile(tmpPath, b, 0644); err != nil {
