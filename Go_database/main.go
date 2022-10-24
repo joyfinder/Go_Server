@@ -200,7 +200,7 @@ type User struct {
 }
 
 func main() {
-	dir := "./"
+	dir := "./database/"
 
 	db, err := New(dir, nil)
 	if err != nil {
