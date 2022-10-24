@@ -1,0 +1,12 @@
+{
+	"Name": "Alice",
+	"Age": 23,
+	"Contact": "2334333",
+	"Company": "Fake comp",
+	"Address": {
+		"City": "indo",
+		"State": "asd",
+		"Country": "thai",
+		"Pincode": 112804
+	}
+}

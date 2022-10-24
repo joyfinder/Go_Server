@@ -1,0 +1,12 @@
+{
+	"Name": "John",
+	"Age": 23,
+	"Contact": "2334333",
+	"Company": "Real",
+	"Address": {
+		"City": "indo",
+		"State": "asd",
+		"Country": "thai",
+		"Pincode": 120381
+	}
+}

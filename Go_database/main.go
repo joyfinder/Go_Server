@@ -200,7 +200,7 @@ type User struct {
 }
 
 func main() {
-	dir := "./database/"
+	dir := "./"
 
 	db, err := New(dir, nil)
 	if err != nil {
@@ -243,7 +243,7 @@ func main() {
 	}
 	fmt.Println((all_users))
 
-	// db.Delete("user", "John"); err != nil{
-	// 	fmt.Println("Error",err)
-	// }
+	if err := db.Delete("users", "Steph"); err != nil {
+		fmt.Println("Error", err)
+	}
 }

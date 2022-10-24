@@ -1,0 +1,12 @@
+{
+	"Name": "Steph",
+	"Age": 23,
+	"Contact": "2334333",
+	"Company": "Google",
+	"Address": {
+		"City": "indo",
+		"State": "asd",
+		"Country": "thai",
+		"Pincode": 15235524
+	}
+}
