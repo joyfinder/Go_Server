@@ -6,6 +6,8 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
+var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
+
 func main() {
 	port := os.Getenv("PORT")
 
