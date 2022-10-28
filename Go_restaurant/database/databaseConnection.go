@@ -21,4 +21,8 @@ func DBinstance() *mongo.Client {
 	defer cancel()
 
 	err = client.Connet(ctx)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
