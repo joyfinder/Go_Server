@@ -1,8 +1,10 @@
 package database
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"time"
 )
 
 func DBinstance() *mongo.Client {
@@ -13,4 +15,10 @@ func DBinstance() *mongo.Client {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	defer cancel()
+
+	err = client.Connet(ctx)
 }
