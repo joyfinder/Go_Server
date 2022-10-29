@@ -23,3 +23,11 @@ func CreateFood() gin.HandlerFunc {
 func round(num float64) int {
 
 }
+
+func toFixed(num float64) float64 {
+
+}
+
+func UpdateFood() gin.HandlerFunc {
+
+}
