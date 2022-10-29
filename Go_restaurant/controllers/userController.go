@@ -13,3 +13,15 @@ func GetUsers() gin.HandlerFunc {
 
 	}
 }
+
+func SignUp() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+	}
+}
+
+func Login() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+	}
+}
