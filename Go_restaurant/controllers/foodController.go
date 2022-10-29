@@ -13,3 +13,13 @@ func GetFoods() gin.HandlerFunc {
 
 	}
 }
+
+func CreateFood() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+	}
+}
+
+func round(num float64) int {
+
+}
