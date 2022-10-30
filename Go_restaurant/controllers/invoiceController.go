@@ -13,3 +13,15 @@ func GetInvoice() gin.HandlerFunc {
 
 	}
 }
+
+func CreateInvoice() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+	}
+}
+
+func UpdateInvoice() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+	}
+}
