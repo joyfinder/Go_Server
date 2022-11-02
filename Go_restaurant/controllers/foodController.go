@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
@@ -47,6 +49,13 @@ func CreateFood() gin.HandlerFunc {
 		validationErr := validate.Struct(food)
 		if validationErr != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
+			return
+		}
+		err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.menu_id}).Decode(&menu)
+		defer cancel()
+		if err != nil {
+			msg := fmt.Sprintf("menu was not found.")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
 	}
