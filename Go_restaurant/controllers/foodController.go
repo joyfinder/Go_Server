@@ -64,6 +64,13 @@ func CreateFood() gin.HandlerFunc {
 		food.food_id = food.ID.Hex()
 		var num = toFixed(*food.Price, 2)
 		food.Price = &num
+
+		result, insertErr := foodCollection.InsertOne(ctx, food)
+		if insertErr != nil {
+			msg := fmt.Sprintf("Food item was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
 	}
 }
 
