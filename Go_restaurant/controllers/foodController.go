@@ -58,6 +58,7 @@ func CreateFood() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
+		food.Create_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 	}
 }
 
