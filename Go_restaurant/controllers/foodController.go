@@ -33,7 +33,8 @@ func GetFoods() gin.HandlerFunc {
 
 func CreateFood() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		var food models.Food
 	}
 }
 
