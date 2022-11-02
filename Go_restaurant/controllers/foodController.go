@@ -15,7 +15,8 @@ func GetFood() gin.HandlerFunc {
 		foodId := c.Param("food_id")
 		var food models.Food
 
-		foodCollection.FindOne
+		foodCollection.FindOne(ctx, bson, M{"food_id": foodId}).Decode(&food)
+		defer cancel()
 	}
 }
 
