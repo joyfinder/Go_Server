@@ -60,6 +60,10 @@ func CreateFood() gin.HandlerFunc {
 		}
 		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		food.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		food.ID = primitive.NewObjectID()
+		food.food_id = food.ID.Hex()
+		var num = toFixed(*food.Price, 2)
+		food.Price = &num
 	}
 }
 
