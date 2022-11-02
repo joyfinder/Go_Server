@@ -6,9 +6,11 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
+var validate = validator.New()
 
 func GetFood() gin.HandlerFunc {
 	return func(c *gin.Context) {
