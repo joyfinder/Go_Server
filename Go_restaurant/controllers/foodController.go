@@ -64,6 +64,8 @@ func CreateFood() gin.HandlerFunc {
 		food.food_id = food.ID.Hex()
 		var num = toFixed(*food.Price, 2)
 		food.Price = &num
+
+		result, insertErr := foodCollection.InsertOne(ctx, food)
 	}
 }
 
