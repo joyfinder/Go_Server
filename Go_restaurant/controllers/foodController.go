@@ -1,10 +1,17 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"context"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
 
 func GetFood() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		foodId := c.Param("food_id")
+		var food models.Food
 	}
 }
 
