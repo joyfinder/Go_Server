@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,10 @@ func GetFood() gin.HandlerFunc {
 
 		foodCollection.FindOne(ctx, bson, M{"food_id": foodId}).Decode(&food)
 		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while fetching the food"})
+		}
+		c.JSON(http.StatusOK, food)
 	}
 }
 
