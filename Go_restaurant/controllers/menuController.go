@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,10 @@ func GetMenus() gin.HandlerFunc {
 	defer cancel()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while listing the menu"})
+	}
+	var allMenus []bson.M
+	if err = result.All(ctx, &allMenus); err != nil {
+		log.Fatal(err)
 	}
 }
 
