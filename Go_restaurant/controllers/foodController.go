@@ -45,6 +45,9 @@ func GetFoods() gin.HandlerFunc {
 		if err != nil || page < 1 {
 			page = 1
 		}
+
+		startIndex := (page - 1) * recordPerPage
+		startIndex, err = strconv.Atoi(c.Query("startIndex"))
 	}
 }
 
