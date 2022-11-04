@@ -56,6 +56,12 @@ func CreateMenu() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 			return
 		}
+		menu.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		menu.ID = primitive.NewObjectID()
+		menu.menu_id = menu.ID.Hex()
+		var num = toFixed(*&menu.Price, 2)
+		menu.Price = &num
 	}
 }
 
