@@ -47,11 +47,11 @@ func CreateMenu() gin.HandlerFunc {
 		var menu models.Menu
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
-		if err := c.BindJSON(&food); err != nil {
+		if err := c.BindJSON(&menu); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		validationErr := validate.Struct(food)
+		validationErr := validate.Struct(menu)
 		if validationErr != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 			return
