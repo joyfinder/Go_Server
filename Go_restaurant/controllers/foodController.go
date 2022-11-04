@@ -31,7 +31,9 @@ func GetFood() gin.HandlerFunc {
 
 func GetFoods() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		// In order to obtain all foods
+		// Requiring all foods' id, price, unit etc
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	}
 }
 
