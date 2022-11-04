@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -31,7 +32,38 @@ func GetFood() gin.HandlerFunc {
 
 func GetFoods() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// In order to obtain all foods
+		// Requiring all foods' id, price, unit etc
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
+		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
+		if err != nil || recordPerPage < 1 {
+			recordPerPage = 10
+		}
+
+		page, err := strconv.Atoi(c.Query("page"))
+		if err != nil || page < 1 {
+			page = 1
+		}
+
+		startIndex := (page - 1) * recordPerPage
+		startIndex, err = strconv.Atoi(c.Query("startIndex"))
+
+		// Propogation
+		matchStage := bson.D{{"$match", bson.D{{}}}}
+
+		// Taking node.js as an example
+		// Passing $group
+		groupStage := bson.D{{"$group", bson.D{{"_id", bson.D{{"_id", "null"}}}, {"total_count", bson.D{{"%sum, 1"}}}, {"data", bson.D{{"$push", "$$ROOT"}}}}}}
+		projectStage := bson.D{
+			{
+				"$project", bson.D{
+					{"_id", 0},
+					{"total_count", 1},
+					{"food_items", bson.D{"$slice", []interface{}{"$data",startIndex, recordPerPage}}}},
+				}
+			}
+		}
 	}
 }
 
@@ -85,5 +117,7 @@ func toFixed(num float64) float64 {
 }
 
 func UpdateFood() gin.HandlerFunc {
+	return func(c *gin.Context) {
 
+	}
 }
