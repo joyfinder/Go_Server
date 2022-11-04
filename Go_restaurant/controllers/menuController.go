@@ -111,5 +111,13 @@ func UpdateMenu() gin.HandlerFunc {
 
 		menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		updateObj = append(updateObj, bson.E{"updated_at", menu.Updated_at})
+
+		upsert := true
+
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
+
+		menu.Collection.UpdateOne{}
 	}
 }
