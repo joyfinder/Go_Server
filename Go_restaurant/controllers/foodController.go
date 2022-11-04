@@ -43,7 +43,7 @@ func GetFoods() gin.HandlerFunc {
 
 		page, err := strconv.Atoi(c.Query("page"))
 		if err != nil || page < 1 {
-			page = 10
+			page = 1
 		}
 	}
 }
