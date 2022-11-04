@@ -118,6 +118,13 @@ func UpdateMenu() gin.HandlerFunc {
 			Upsert: &upsert,
 		}
 
-		menu.Collection.UpdateOne{}
+		result, err := menu.Collection.UpdateOne{
+			ctx,
+			filter,
+			bson.D{
+				{"$set",updateObj}
+			},
+			&opt,
+		}
 	}
 }
