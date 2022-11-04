@@ -29,7 +29,16 @@ func GetMenus() gin.HandlerFunc {
 
 func GetMenu() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		foodId := c.Param("food_id")
+		var food models.Food
 
+		foodCollection.FindOne(ctx, bson, M{"food_id": foodId}).Decode(&food)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while fetching the food"})
+		}
+		c.JSON(http.StatusOK, food)
 	}
 }
 
