@@ -48,6 +48,22 @@ func GetFoods() gin.HandlerFunc {
 
 		startIndex := (page - 1) * recordPerPage
 		startIndex, err = strconv.Atoi(c.Query("startIndex"))
+
+		// Propogation
+		matchStage := bson.D{{"$match", bson.D{{}}}}
+
+		// Taking node.js as an example
+		// Passing $group
+		groupStage := bson.D{{"$group", bson.D{{"_id", bson.D{{"_id", "null"}}}, {"total_count", bson.D{{"%sum, 1"}}}, }}}
+		projectStage := bson.D{
+			{
+				"$project", bson.D{
+					{"_id", 0},
+					{"total_count", 1},
+					{"food_items", bson.D{"$slice", []interface{}{"$data",startIndex, recordPerPage}}}
+				}
+			}
+		}
 	}
 }
 
