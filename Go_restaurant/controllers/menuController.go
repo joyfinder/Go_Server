@@ -98,5 +98,18 @@ func UpdateMenu() gin.HandlerFunc {
 			defer cancel()
 			return
 		}
+
+		updateObj = append(updateObj, bson.E{"start_date", menu.Start_Date})
+		updateObj = append(updateObj, bson.E{"end_date", menu.End_Date})
+
+		if menu.Name != "" {
+			updateObj = append(updateObj, bson.E{"name", menu.Name})
+		}
+		if menu.Category != "" {
+			updateObj = append(updateObj, bson.E{"name", menu.Category})
+		}
+
+		menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{"updated_at", menu.Updated_at})
 	}
 }
