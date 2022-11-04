@@ -85,5 +85,7 @@ func toFixed(num float64) float64 {
 }
 
 func UpdateFood() gin.HandlerFunc {
+	return func(c *gin.Context) {
 
+	}
 }

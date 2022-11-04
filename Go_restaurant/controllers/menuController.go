@@ -76,5 +76,17 @@ func CreateMenu() gin.HandlerFunc {
 func UpdateMenu() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		// Determine what objects updatemenu requires
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		var menu models.Menu
+
+		if err := c.BindJSON(&menu); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
+
+	menuId := c.Param("menu_id")
+	filter := bson.M{"menu_id": menuId}
+
 }
