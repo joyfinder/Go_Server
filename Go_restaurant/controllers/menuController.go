@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -60,8 +61,15 @@ func CreateMenu() gin.HandlerFunc {
 		menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		menu.ID = primitive.NewObjectID()
 		menu.menu_id = menu.ID.Hex()
-		var num = toFixed(*&menu.Price, 2)
-		menu.Price = &num
+
+		result, insertErr := menuCollection.InsertOne(ctx, menu)
+		if insertErr != nil {
+			msg := fmt.Sprintf("Menu was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+		defer cancel()
+		c.JSON(httpStatusOk, result)
 	}
 }
 
