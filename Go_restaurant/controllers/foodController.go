@@ -60,7 +60,7 @@ func GetFoods() gin.HandlerFunc {
 				"$project", bson.D{
 					{"_id", 0},
 					{"total_count", 1},
-					{"food_items", bson.D{"$slice", []interface{}{"$data",startIndex, recordPerPage}}}
+					{"food_items", bson.D{"$slice", []interface{}{"$data",startIndex, recordPerPage}}}},
 				}
 			}
 		}
