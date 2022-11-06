@@ -147,11 +147,11 @@ func UpdateFood() gin.HandlerFunc {
 		var updateObj primitive.D
 
 		if food.Name != nil {
-
+			updateObj = append(updateObj, bson.E{"name", food.Name})
 		}
 
 		if food.Price != nil{
-
+			updateObj = append(updateObj, bson.E{"price", food.Price})
 		}
 
 		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
