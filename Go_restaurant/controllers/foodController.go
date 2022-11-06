@@ -154,6 +154,17 @@ func UpdateFood() gin.HandlerFunc {
 			updateObj = append(updateObj, bson.E{"price", food.Price})
 		}
 
+		if food.Food_image != nil{
+			updateObj = append(updateObj, bson.E{"food_image", food.Food_image})
+		}
+
+		if food.Menu_id != nil{
+			// Finding menu id first before checking food
+			// Prior to the condition of menu, without it
+			// There is no food generated.
+			err := menuCollection.FindOne()
+		}
+
 		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		updateObj = append(updateObj, bson.E{"updated_at", food.Updated_at})
 
