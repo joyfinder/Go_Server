@@ -166,7 +166,10 @@ func UpdateFood() gin.HandlerFunc {
 			defer cancel()
 			if err != nil{
 				msg := fmt.Sprintf("message: Menu was not found")
+				c.JSON(http.StatusInternalServerError, gin.H{"error":msg})
+				return 
 			}
+			updateObj = append(updateObj, bson.E{"menu", food.Price})
 		}
 
 		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
