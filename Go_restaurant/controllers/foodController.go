@@ -133,6 +133,10 @@ func toFixed(num float64) float64 {
 
 func UpdateFood() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		var menu models.Menu
+		var food models.Food
 
+		foodId := c.Param("food_id")
 	}
 }
