@@ -162,7 +162,11 @@ func UpdateFood() gin.HandlerFunc {
 			// Finding menu id first before checking food
 			// Prior to the condition of menu, without it
 			// There is no food generated.
-			err := menuCollection.FindOne()
+			err := menuCollection.FindOne(ctx, bson.M{"menu_id": food.Menu_id}).Decode(&menu)
+			defer cancel()
+			if err != nil{
+				msg := fmt.Sprintf("message: Menu was not found")
+			}
 		}
 
 		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
