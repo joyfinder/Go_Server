@@ -145,5 +145,23 @@ func UpdateFood() gin.HandlerFunc {
 		}
 
 		var updateObj primitive.D
+
+		if food.Name != nil {
+
+		}
+
+		if food.Price != nil{
+
+		}
+
+		food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		updateObj = append(updateObj, bson.E{"updated_at", food.Updated_at})
+
+		upsert := true
+		filter := bson.M{"food_id": foodId}
+
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
 	}
 }
