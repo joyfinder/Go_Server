@@ -138,5 +138,12 @@ func UpdateFood() gin.HandlerFunc {
 		var food models.Food
 
 		foodId := c.Param("food_id")
+
+		if err := c.BindJSON(&food); err != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		var updateObj primitive.D
 	}
 }
