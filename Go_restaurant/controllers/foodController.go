@@ -172,5 +172,12 @@ func UpdateFood() gin.HandlerFunc {
 			},
 			&opt,
 		}
+
+		if err != nil {
+			msg := fmt.Sprint("foot item update failed.")
+			c.JSON(http.StatusInternalServerError, gin.H{"error":msg})
+			return
+		}
+		c.JSON(http.StatusOK, result)
 	}
 }
