@@ -163,5 +163,14 @@ func UpdateFood() gin.HandlerFunc {
 		opt := options.UpdateOptions{
 			Upsert: &upsert,
 		}
+
+		foodCollection.Update{
+			ctx,
+			filter,
+			bson.D{
+				{"$set",updateObj}
+			},
+			&opt,
+		}
 	}
 }
