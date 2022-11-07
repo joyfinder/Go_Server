@@ -91,6 +91,12 @@ func UpdateOrder() gin.HandlerFunc {
 				},
 				&opt,
 			)
+
+			if err != nil {
+				msg := fmt.Sprintf("order item update failed!")
+				c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+				return
+			}
 		}
 	}
 }
