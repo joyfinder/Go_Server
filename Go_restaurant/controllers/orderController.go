@@ -75,6 +75,13 @@ func UpdateOrder() gin.HandlerFunc {
 			updateObj = append(updateObj, bson.E{"menu", order.Table_id})
 
 			food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+			updateObj = append(updateObj, bson.E{"updated_at", food.Updated_at})
+
+			upsert := true
+			filter := bson.M{"order_id": orderId}
+			opt := options.UpdateOptions{
+				Upsert: &upsert,
+			}
 		}
 	}
 }
