@@ -50,6 +50,8 @@ func CreateOrder() gin.HandlerFunc {
 
 func UpdateOrder() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		var table models.Table
+		var order models.Order
+		var updateObj primitive.D
 	}
 }
