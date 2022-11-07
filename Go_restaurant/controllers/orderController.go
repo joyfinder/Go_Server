@@ -82,6 +82,15 @@ func UpdateOrder() gin.HandlerFunc {
 			opt := options.UpdateOptions{
 				Upsert: &upsert,
 			}
+
+			orderCollection.UpdateOne(
+				ctx,
+				filter,
+				bson.D{
+					{"$st", updateObj},
+				},
+				&opt,
+			)
 		}
 	}
 }
