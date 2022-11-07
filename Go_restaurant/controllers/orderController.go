@@ -23,8 +23,7 @@ func GetOrders() gin.HandlerFunc {
 		if err = result.All(ctx, &allFoods); err != nil {
 			log.Fatal(err)
 		}
-		c.JSON(http.StatusOK, allFoods[0])
-
+		c.JSON(http.StatusOK, allFoods)
 	}
 }
 
