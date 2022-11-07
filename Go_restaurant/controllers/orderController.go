@@ -59,6 +59,16 @@ func CreateOrder() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 			return
 		}
+
+		if order.Table_id != nil {
+			err := tableCollection.FindOne(ctx, bson.M{"table_id": order.Table_id}).Decode(&table)
+			defer cancel()
+			if err != nil {
+				msg := fmt.Sprint("message: Table was not discovered.")
+				c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+				return
+			}
+		}
 	}
 }
 
