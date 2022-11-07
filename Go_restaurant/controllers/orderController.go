@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -61,7 +62,19 @@ func UpdateOrder() gin.HandlerFunc {
 		}
 
 		if order.Table_id != nil {
+			// Finding order id first before checking order
+			// Prior to the condition of menu, without it
+			// There is no order generated.
+			err := menuCollection.FindOne(ctx, bson.M{"table_id": food.Table_id}).Decode(&table)
+			defer cancel()
+			if err != nil {
+				msg := fmt.Sprintf("message: Order was not found")
+				c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+				return
+			}
+			updateObj = append(updateObj, bson.E{"menu", order.Table_id})
 
+			food.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		}
 	}
 }
