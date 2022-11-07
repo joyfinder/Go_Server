@@ -74,6 +74,14 @@ func CreateOrder() gin.HandlerFunc {
 
 		order.ID = primitive.NewObjectID()
 		order.Order_id = order.ID.Hex()
+
+		result, insertErr := orderCollection.InsertOne(ctx, order)
+
+		if insertErr != nil {
+			msg := fmt.Sprintf("order item was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
 	}
 }
 
