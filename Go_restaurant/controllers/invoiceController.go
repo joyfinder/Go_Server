@@ -17,6 +17,8 @@ type InvoiceViewFormat struct {
 	Order_details    interface{}
 }
 
+var invoiceCollection *mongo.Colleciton = database.OpenCollection(database.Client, "invoice")
+
 func GetInvoices() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
