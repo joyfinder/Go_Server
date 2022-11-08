@@ -30,6 +30,10 @@ func GetInvoices() gin.HandlerFunc {
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred when getting invoices."})
 		}
+		var allInvoices []bson.M
+		if err = result.All(ctx, &allInvoices); err != nil {
+
+		}
 	}
 }
 
