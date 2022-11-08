@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -32,8 +33,9 @@ func GetInvoices() gin.HandlerFunc {
 		}
 		var allInvoices []bson.M
 		if err = result.All(ctx, &allInvoices); err != nil {
-
+			log.Fatal(err)
 		}
+		c.JSON(httpStatusOk, allInvoices)
 	}
 }
 
