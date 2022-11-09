@@ -93,5 +93,16 @@ func UpdateInvoice() gin.HandlerFunc {
 		filter := bson.M{"invoice_id": invoiceId}
 
 		var updateObj primitive.D
+
+		if invoice.Payment_method != nil {
+
+		}
+
+		if invoice.Payment_status != nil {
+
+		}
+
+		invoice.updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{"updated_at", invoice.Updated_at})
 	}
 }
