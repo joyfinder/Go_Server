@@ -46,7 +46,11 @@ func GetInvoice() gin.HandlerFunc {
 
 		var invoice models.Invoice
 
-		err := invoiceCollection.FindOne(ctx, bson.M{"invoice_id": invoiceId})
+		err := invoiceCollection.FindOne(ctx, bson.M{"invoice_id": invoiceId}).Decode(&invoice)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while listing invoice team"})
+		}
 	}
 }
 
