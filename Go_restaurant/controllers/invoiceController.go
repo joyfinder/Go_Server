@@ -66,6 +66,7 @@ func GetInvoice() gin.HandlerFunc {
 		invoiceView.Payment_status = *&invoice.Payment_status
 		invoiceView.Payment_due = allOrderItems[0]["payment_due"]
 		invoiceView.Table_number = allOrderItems[0]["table_nubmer"]
+		invoiceView.Order_details = allOrderItems[0]["order_items"]
 	}
 }
 
