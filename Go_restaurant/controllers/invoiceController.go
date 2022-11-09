@@ -56,6 +56,8 @@ func GetInvoice() gin.HandlerFunc {
 
 		allOrderItems, err := ItemsByOrder(invoice.Order_id)
 		invoiceView.Order_id = invoice.Order_id
+		invoiceView.Order_due_date = invoice.Payment_due_date
+		invoiceView.Payment_method = "null"
 	}
 }
 
