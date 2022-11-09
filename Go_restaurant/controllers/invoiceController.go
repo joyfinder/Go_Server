@@ -51,6 +51,11 @@ func GetInvoice() gin.HandlerFunc {
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while listing invoice team"})
 		}
+
+		var invoiceView InvoiceViewFormat
+
+		allOrderItems, err := ItemsByOrder(invoice.Order_id)
+		invoiceView.Order_id = invoice.Order_id
 	}
 }
 
