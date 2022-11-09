@@ -84,5 +84,10 @@ func UpdateInvoice() gin.HandlerFunc {
 
 		var invoice models.Invoice
 		invoiceId := c.Param("invoice_id")
+
+		if err := c.BindJSON(&invoice); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 }
