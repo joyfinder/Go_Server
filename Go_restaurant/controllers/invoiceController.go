@@ -104,5 +104,16 @@ func UpdateInvoice() gin.HandlerFunc {
 
 		invoice.updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		updateObj = append(updateObj, bson.E{"updated_at", invoice.Updated_at})
+
+		upsert := true
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
+
+		status := "PENDING"
+		if invoice.Payment_status == nil {
+			invoice.Payment_status = &status
+		}
+
 	}
 }
