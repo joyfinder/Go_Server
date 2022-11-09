@@ -89,5 +89,9 @@ func UpdateInvoice() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
+		filter := bson.M{"invoice_id": invoiceId}
+
+		var updateObj primitive.D
 	}
 }
