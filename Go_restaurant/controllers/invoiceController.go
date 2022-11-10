@@ -84,9 +84,10 @@ func CreateInvoice() gin.HandlerFunc {
 			return
 		}
 
+		err := invoiceCollection.FindOne(ctx, bson.M{"invoice_id": invoice.Order_id}).Decode(&order)
 		defer cancel()
 		if err != nil {
-			msg.Sprinf("message: Order was not found")
+			msg := fmt.Sprintf("message: Order was not found")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 		}
 
