@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -114,6 +115,24 @@ func UpdateInvoice() gin.HandlerFunc {
 		if invoice.Payment_status == nil {
 			invoice.Payment_status = &status
 		}
+
+		result, err := invoiceCollection.updateOne(
+			ctx,
+			filter,
+			bson.D{
+
+				{"$set", updateObj},
+			},
+			&opt,
+		)
+		if err != nil {
+			msg := fmt.Sprintf("invoice item update failed")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+
+		defer cancel()
+		c.JSON(http.StatusOK, result)
 
 	}
 }
