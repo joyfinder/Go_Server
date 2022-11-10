@@ -83,6 +83,15 @@ func CreateInvoice() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
+		defer cancel()
+		if err != nil {
+			msg.Sprinf("message: Order was not found")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		}
+
+		invoice.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		invoice.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	}
 }
 
