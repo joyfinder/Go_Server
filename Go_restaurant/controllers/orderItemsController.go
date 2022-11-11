@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type OrderItemPack struct {
@@ -23,6 +24,8 @@ func GetOrderItemsByOrder() gin.HandlerFunc {
 func GetOrderItems() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+
+		result, err := orderItemCollection.Find(context.TODO(), bson.M{})
 	}
 }
 
