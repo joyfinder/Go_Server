@@ -20,6 +20,8 @@ var orderItemCollection *mongo.Collection = database.OpenCollection(database.Cli
 func GetOrderItemsByOrder() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		orderId := c.Param("order_id")
+
+		allOrderItems, err := ItemsByOrders(orderId)
 	}
 }
 
