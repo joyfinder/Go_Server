@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type OrderItemPack struct {
@@ -35,6 +36,13 @@ func GetOrderItem() gin.HandlerFunc {
 
 		orderItemId := c.Param("order_item_id")
 		var orderItem models.OrderItem
+
+		err := orderItemCollection.FindOne(ctx, bson.M{"orderItem_id": orderItemId}).Decode(&orderItem)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred when listing order item"})
+			return
+		}
 	}
 }
 
