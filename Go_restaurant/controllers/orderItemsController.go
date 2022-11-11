@@ -31,7 +31,7 @@ func GetOrderItemsByOrder() gin.HandlerFunc {
 	}
 }
 
-func GetOrderItems() gin.HandlerFunc {
+func GetOrderItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
