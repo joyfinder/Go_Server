@@ -57,7 +57,7 @@ func CreateOrderItem() gin.HandlerFunc {
 	}
 }
 
-func ItemsByOrders(id string) (OrderItems []primitive.M, err error) {
+func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 
 }
 
