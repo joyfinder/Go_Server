@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -33,6 +34,12 @@ func GetOrderItems() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred when getting order items"})
 			return
 		}
+		var allOrderItems []bson.M
+		if err = result.All(ctx, &allOrderItems); err != nil {
+			log.Fatal(err)
+			return
+		}
+		c.JSON(http.StatusOk, allOrderItems)
 	}
 }
 
