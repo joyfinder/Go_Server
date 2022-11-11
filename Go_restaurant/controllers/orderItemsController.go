@@ -34,6 +34,7 @@ func GetOrderItem() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		orderItemId := c.Param("order_item_id")
+		var orderItem models.OrderItem
 	}
 }
 
