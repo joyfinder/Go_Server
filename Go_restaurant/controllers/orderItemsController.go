@@ -77,6 +77,9 @@ func CreateOrderItem() gin.HandlerFunc {
 			orderItem.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 			orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 			orderItem.Order_item_id = orderItem.ID.Hex()
+			var num = toFixed(*orderItem.Unit_price, 2)
+			orderItem.Unit_price = &num
+			orderItemsToBeInserted = append(orderItemsToBeInserted, orderItem)
 		}
 	}
 }
