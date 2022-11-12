@@ -81,6 +81,8 @@ func CreateOrderItem() gin.HandlerFunc {
 			orderItem.Unit_price = &num
 			orderItemsToBeInserted = append(orderItemsToBeInserted, orderItem)
 		}
+
+		insertedOrderItems, err := orderItemCollection.InsertMany(ctx, orderItemsToBeInserted)
 	}
 }
 
