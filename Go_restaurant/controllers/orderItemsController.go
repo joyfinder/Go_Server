@@ -53,6 +53,11 @@ func CreateOrderItem() gin.HandlerFunc {
 
 		var OrderItemPack OrderItemPack
 		var order models.Order
+
+		if err := c.BindJSON(&OrderItemPack); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 }
 
