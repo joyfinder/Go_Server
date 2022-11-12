@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -83,6 +84,10 @@ func CreateOrderItem() gin.HandlerFunc {
 		}
 
 		insertedOrderItems, err := orderItemCollection.InsertMany(ctx, orderItemsToBeInserted)
+
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
