@@ -73,6 +73,10 @@ func CreateOrderItem() gin.HandlerFunc {
 				c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 				return
 			}
+			orderItem.ID = primitive.NewObjectID()
+			orderItem.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+			orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+			orderItem.Order_item_id = orderItem.ID.Hex()
 		}
 	}
 }
