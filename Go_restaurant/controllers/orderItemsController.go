@@ -63,6 +63,17 @@ func CreateOrderItem() gin.HandlerFunc {
 		orderItemsToBeInserted := []interface{}{}
 		order.Table_id = OrderItemPack.Table_id
 		order_id := OrderItemOrderCreator(order)
+
+		for _, orderItem := range orderItemPack.Order_items {
+			orderItem.Order_id = order_id
+
+			validationErr := validate.Struct(orderItem)
+
+			if validationErr != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
+				return
+			}
+		}
 	}
 }
 
