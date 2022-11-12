@@ -58,6 +58,11 @@ func CreateOrderItem() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
+		order.Order_Date, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		orderItemsToBeInserted := []interface{}{}
+		order.Table_id = OrderItemPack.Table_id
+		order_id := OrderItemOrderCreator(order)
 	}
 }
 
