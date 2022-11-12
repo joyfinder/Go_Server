@@ -43,12 +43,16 @@ func GetOrderItem() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred when listing order item"})
 			return
 		}
+		c.JSON(http.StatusOK, orderItem)
 	}
 }
 
 func CreateOrderItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
+		var OrderItemPack OrderItemPack
+		var order models.Order
 	}
 }
 
