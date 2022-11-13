@@ -88,6 +88,8 @@ func CreateOrderItem() gin.HandlerFunc {
 		if err != nil {
 			log.Fatal(err)
 		}
+		defer cancel()
+		c.JSON(http.StatusOK, insertedOrderItems)
 	}
 }
 
