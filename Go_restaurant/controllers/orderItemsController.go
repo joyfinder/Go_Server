@@ -104,5 +104,11 @@ func UpdateOrderItem() gin.HandlerFunc {
 		orderItemId := c.Param("order_item_id")
 		filter := bson.M{"order_item_id": orderItemId}
 		var updateObj primitive.D
+
+		orderItem.Unit_price
+		orderItem.Quantity
+		orderItem.Food_id
+		orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		updateObj = append(updateObj, bson.E{"updated_at", orderItem.Updated_at})
 	}
 }
