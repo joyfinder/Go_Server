@@ -105,9 +105,15 @@ func UpdateOrderItem() gin.HandlerFunc {
 		filter := bson.M{"order_item_id": orderItemId}
 		var updateObj primitive.D
 
-		orderItem.Unit_price
-		orderItem.Quantity
-		orderItem.Food_id
+		if orderItem.Unit_price != nil {
+			updateObj = append(updateObj, bson.E{"unit_price", *&orderItem.Unit_price})
+		}
+		if orderItem.Quantity != nil {
+			updateObj = append(updateObj, bson.E{"quantity", *orderItem.Quantity})
+		}
+		if orderItem.Food_id != nil {
+			updateObj = append(updateObj, bson.E{"food_id", *orderItem.Food_id})
+		}
 		orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		updateObj = append(updateObj, bson.E{"updated_at", orderItem.Updated_at})
 	}
