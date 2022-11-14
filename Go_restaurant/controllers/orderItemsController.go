@@ -130,5 +130,11 @@ func UpdateOrderItem() gin.HandlerFunc {
 			},
 			&opt,
 		)
+
+		if err != nil {
+			msg := "Order item update failed"
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
 	}
 }
