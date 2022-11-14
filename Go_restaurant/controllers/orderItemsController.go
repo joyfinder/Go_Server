@@ -116,5 +116,19 @@ func UpdateOrderItem() gin.HandlerFunc {
 		}
 		orderItem.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
 		updateObj = append(updateObj, bson.E{"updated_at", orderItem.Updated_at})
+
+		upsert := true
+		opt := options.UpdateOptions{
+			Upset: &upsert,
+		}
+
+		orderItemCollection.UpdateOne{
+			ctx,
+			filter,
+			bson.D{
+				{"$set", updateObj},
+			},
+			&opt,
+		}
 	}
 }
