@@ -122,13 +122,13 @@ func UpdateOrderItem() gin.HandlerFunc {
 			Upset: &upsert,
 		}
 
-		orderItemCollection.UpdateOne{
+		result, err := orderItemCollection.UpdateOne(
 			ctx,
 			filter,
 			bson.D{
 				{"$set", updateObj},
 			},
 			&opt,
-		}
+		)
 	}
 }
