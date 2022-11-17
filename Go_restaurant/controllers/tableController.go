@@ -36,7 +36,7 @@ func GetTable() gin.HandlerFunc {
 		tableId := c.Param("table_id")
 		var table models.Table
 
-		err := tableCollection.FindOne(ctx, bson, M{"table_id": tableId}).Decode(&table)
+		err := tableCollection.FindOne(ctx, bson.M{"table_id": tableId}).Decode(&table)
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while getting table"})
@@ -47,7 +47,14 @@ func GetTable() gin.HandlerFunc {
 
 func CreateTable() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
+		var table models.Table
+
+		if err := c.BindJSON(&order); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 }
 
