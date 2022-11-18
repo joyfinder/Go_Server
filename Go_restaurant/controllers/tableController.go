@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -60,7 +61,13 @@ func CreateTable() gin.HandlerFunc {
 
 		if validationErr != nil {
 			c.JSON{http.StatusBadRequest, gin.H{"error": validationErr.Error()}}
+			return
 		}
+		table.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		table.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+
+		table.ID = primitive.NewObjectID()
+		table.Order_id = table.ID.Hex()
 	}
 }
 
