@@ -2,11 +2,13 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -60,7 +62,24 @@ func CreateTable() gin.HandlerFunc {
 
 		if validationErr != nil {
 			c.JSON{http.StatusBadRequest, gin.H{"error": validationErr.Error()}}
+			return
 		}
+		table.Created_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+		table.Updated_at, _ = time.Parse(time.RFC3339, time.Now()).Format(time.RFC3339)
+
+		table.ID = primitive.NewObjectID()
+		table.Order_id = table.ID.Hex()
+
+		result, insertErr := tableCollection.InsertOne(ctx, table)
+
+		if insertErr != nil {
+			msg := fmt.Sprintf("Table item was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+		defer cancel(
+			c.JSON(http.StatusOK, result)
+		)
 	}
 }
 
