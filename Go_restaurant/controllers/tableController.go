@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -68,6 +69,17 @@ func CreateTable() gin.HandlerFunc {
 
 		table.ID = primitive.NewObjectID()
 		table.Order_id = table.ID.Hex()
+
+		result, insertErr := tableCollection.InsertOne(ctx, table)
+
+		if insertErr != nil {
+			msg := fmt.Sprintf("Table item was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+		defer cancel(
+			c.JSON(http.StatusOK, result)
+		)
 	}
 }
 
