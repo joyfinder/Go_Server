@@ -10,7 +10,6 @@ type OrderItem struct {
 	ID            primitive.ObjectID
 	Quantity      *string
 	Unit_price    *float64
-	Order_Date    time.Time `json:"created_at"`
 	Created_at    time.Time `json:"created_at"`
 	Updated_at    time.Time `json:"updated_at"`
 	food_id       *string   `json:"food_id" validate:"required"`
