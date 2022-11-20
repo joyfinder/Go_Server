@@ -97,7 +97,9 @@ func CreateOrderItem() gin.HandlerFunc {
 }
 
 func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
-
+	var ctx, cancel := context.WithTimeout(context.Background(), 100 * time.Second)
+	
+	matchStage := bson.D({"$match", bson.D{{"order_id", id}}})
 }
 
 func UpdateOrderItem() gin.HandlerFunc {
