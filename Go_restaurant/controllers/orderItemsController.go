@@ -106,7 +106,7 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 	lookupOrderStage := bson.D{{"$lookup", bson.D{{"food","order"}, {"localField", "order_id"}, {"foreignField", "order_id"}, {"as","order_id"}}}}
 	unwindOrderStage := bson.D{{"$unwind", bson.D{"path", "$order"}, {"preserveNullAndEmptyArrays", true}}}
 	
-	lookupTableStage := bson.D{{"$lookup", bson.D{"from","table"}, {"localField","order.Table_id"}}}
+	lookupTableStage := bson.D{{"$lookup", bson.D{"from","table"}, {"localField","order.Table_id"}, {"foreignField", "table_id"}}}
 }
 
 func UpdateOrderItem() gin.HandlerFunc {
