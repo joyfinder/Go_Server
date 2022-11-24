@@ -116,7 +116,11 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 			{"total_count", 1},
 			{"food_name", "$food.name"},
 			{"food_image", "$food.food_image"},
-			{"table_number", "$table.table_number"}
+			{"table_number", "$table.table_number"},
+			{"table_id", "$table.table_id"},
+			{"order_id", "$order.order_id"},
+			{"price", "$food_price"},
+			{"quantity",1}, 
 		}
 
 		}
