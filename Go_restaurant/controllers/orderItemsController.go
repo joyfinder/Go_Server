@@ -121,10 +121,9 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 			{"order_id", "$order.order_id"},
 			{"price", "$food_price"},
 			{"quantity",1}, 
-		}
+		}}}
 
-		}
-		}
+		groupStage := bson.D{{"$group", bson.D{{"_id", bson.D{{"order_id", "$order_id"}, {"table_id","$table_id"}, {"table_number", "$table_number"}}}, {"payment_due", bson.D{{"$sum", "$amount"}}},{"total_count", bson.D{{"$sum", 1}}}, {"order_items", bson.D{{"$sum", "$amount"}}}}}}
 }
 
 func UpdateOrderItem() gin.HandlerFunc {
